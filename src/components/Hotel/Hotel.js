@@ -1,23 +1,30 @@
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { fts } from '../../f/fts'
 import { hotel_autocomplete } from '../../f/hotel_autocomplete'
 import D from '../Date/D'
 
 const initialValue = new Date()
 const Hotel = () => {
+  const [timenight, settimenight]= useState(()=> 1)
+  const [value, setValue]= useState(initialValue)
+  const [choose, setchoose]= useState(()=> "")
+  const [addi, setaddi]= useState(()=> "")
   return (
     <div className="cp-2">
         <div className="pg-1">
-            <E />
+            <E addi={addi} setaddi={setaddi} choose={choose} setchoose={setchoose} />
             <br />
-            <F />
+            <F value={value} setValue={setValue} timenight={timenight} settimenight={settimenight} />
             <br />
-            <G />
+            <G addi={addi} value={value} timenight={timenight} choose={choose} setchoose={setchoose} />
         </div>
     </div>
   )
 }
+export default Hotel    
 
 const E= (props)=> {
     const [opensuggest, setopensuggest]= useState(()=> false)
@@ -32,7 +39,7 @@ const E= (props)=> {
         document.addEventListener("mousedown", outsidefunction)
         return ()=> document.removeEventListener("mousedown", outsidefunction)
     }, [])
-    const [choose, setchoose]= useState(()=> "")
+    const [listsearch, setlistsearch]= useState(()=> [])
     return (
         <div className="eo-1">
             <div className="bm-1">
@@ -45,7 +52,10 @@ const E= (props)=> {
                 <div className="ic-3">
                     <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/0/06c6fdcf3e33d2950e2743ea8c3d2208.svg" alt="open" width="24" height="24" />
                 </div>
-                <input onChange={()=> {}} value={choose} type="text" spellCheck={true} aria-invalid={false} autoCapitalize={"sentences"} autoComplete={"on"} dir="auto" className="it-1" placeholder="Thành phố, khách sạn, điểm đến" />
+                <input onChange={(e)=> {
+                    props.setchoose(e.target.value)
+                    fts(setlistsearch, e.target.value)
+                }} value={props.choose} type="text" spellCheck={true} aria-invalid={false} autoCapitalize={"sentences"} autoComplete={"on"} dir="auto" className="it-1" placeholder="Thành phố, khách sạn, điểm đến" />
                 {
                     opensuggest=== true &&
                     <div className="sg-1">
@@ -53,30 +63,10 @@ const E= (props)=> {
                             Điểm đến phổ biến
                         </div>
                         {
-                            hotelAutocomplete && hotelAutocomplete?.map((item, key)=> <div key={key} className="ip-1" onClick={(e)=> {
-                                e.stopPropagation()
-                                setopensuggest(()=> false)
-                                setchoose(item?.destination)
-                            }}>
-                            <div className="gf-1">
-                                <div className="at-1">
-                                    <div className="hr-1">
-                                        {item?.destination}
-                                    </div>
-                                    <div className="ut-1">
-                                        {item?.type}
-                                    </div>
-                                </div>
-                                <div className="iw-1">
-                                    <div className="hr-2">
-                                        {item?.location_travel}
-                                    </div>
-                                    <div className="ut-2">
-                                        {item?.c_hotel} khách sạn
-                                    </div>
-                                </div>
-                            </div>
-                        </div>)
+                            listsearch?.length>0 && listsearch?.map((item, key)=> <X addi={props.addi} setaddi={props.setaddi} key={key} setopensuggest={setopensuggest} setchoose={props.setchoose} {...item}  />)
+                        }
+                        {
+                            listsearch?.length<=0 && hotelAutocomplete && hotelAutocomplete?.map((item, key)=> <X addi={props.addi} setaddi={props.setaddi} key={key} setopensuggest={setopensuggest} setchoose={props.setchoose} {...item}  />)
                         }
                     </div>
                 }
@@ -84,14 +74,47 @@ const E= (props)=> {
         </div>
     )
 }
+const X= (props)=> {
+    return (
+        <div className="ip-1" onClick={(e)=> {
+            e.stopPropagation()
+            props.setopensuggest(()=> false)
+            props.setchoose(props?.destination)
+            props.setaddi(props?.location_travel)
+        }}>
+        <div className="gf-1">
+            <div className="at-1">
+                <div className="hr-1">
+                    {props?.destination}
+                </div>
+                    {props?.type?.length>0 &&
+                    <div className="ut-1">
+                        {props?.type}
+                    </div>
+                    }
+            </div>
+            <div className="iw-1">
+                <div className="hr-2">
+                    {props?.location_travel}
+                </div>
+                <div className="ut-2">
+                    {
+                        props?.c_hotel > 0 &&
+                    props?.c_hotel+ " khách sạn"
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    )
+}
 const F= (props)=> {
-    const [timenight, settimenight]= useState(()=> 1)
-    const [value, setValue]= useState(initialValue)
+    
     return (
         <div className="ce-1">
-            <F1 value={value} setValue={setValue} />
-            <F2 value={value} timenight={timenight} settimenight={settimenight} /> 
-            <F3 value={value} timenight={timenight} />
+            <F1 value={props.value} setValue={props.setValue} />
+            <F2 value={props.value} timenight={props.timenight} settimenight={props.settimenight} /> 
+            <F3 value={props.value} timenight={props.timenight} />
         </div>
     )
 }
@@ -293,15 +316,15 @@ const G= (props)=> {
                         }
                     </div>
                     <div>
-                        <div className="ld-1">
-                            <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6109dccccb4bbae97f5ded035b3853d9.svg" alt="open" />
-                            <div className="so-1">Tìm khách sạn</div>
-                        </div>
+                        <Link to={"/hotel/search?spec=" + moment(new Date(props.value)).format("DD-MM-YYYY")+"."+moment(moment(`${new Date(props.value).getDate().toString()}${((parseInt(new Date(props.value).getMonth() +1).toString()) <10) ? '0' + (parseInt(new Date(props.value).getMonth() ) + 1).toString() : (parseInt(new Date(props.value).getMonth()) + 1).toString()}${new Date(props.value).getFullYear().toString()}`, "DDMMYYYY")).add(parseInt(props.timenight), "days").format("DD-MM-YYYY") +"."+props.timenight+"&l="+props.choose.toString().replaceAll(" ", "-") + "&c="+ (parseInt(data.adult) + parseInt(data.kid)).toString()+"&r=" + (parseInt(data.room)).toString()} style={{textDecoration: "none"}} state={{location_travel: props.addi}}>
+                            <div className="ld-1">
+                                <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6109dccccb4bbae97f5ded035b3853d9.svg" alt="open" />
+                                <div className="so-1">Tìm khách sạn</div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
-export default Hotel

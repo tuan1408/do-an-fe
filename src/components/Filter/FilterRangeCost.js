@@ -1,12 +1,11 @@
 import * as React from "react"
 import Box from "@mui/material/Box"
 import Slider from "@mui/material/Slider"
-import _ from "lodash"
 
 function valuetext(value) {
   return `${value}K`
 }
-const fakesleep= (ms)=> new Promise(res=> setTimeout(res, ms))
+
 export default function FilterRangeCost(props) {
     const marks = [
         {
@@ -19,11 +18,11 @@ export default function FilterRangeCost(props) {
         },
     ];
       
-  const [value, setValue] = React.useState([props.maxcost?.cost_adult - props.mincost?.cost_adult / 2, props.maxcost?.cost_adult-props.mincost?.cost_adult / 4])
+  const [value, setValue] = React.useState([props.mincost?.cost_adult, props.maxcost?.cost_adult])
 
   const handleChange = async (event, newValue) => {
     setValue(newValue)
-    await fakesleep(2000)
+    props.setfindbyrangecost(()=> newValue)
   }
 
   return (
