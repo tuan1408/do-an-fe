@@ -17,9 +17,11 @@ const SearchHotel = () => {
   const [list, setlist]= useState(()=> [])
   const [listRange, setListRange]= useState(()=> [])
   const [reviewstar, setreviewstar]= useState(()=> [])
+  const [entities, setentities]= useState(()=> ([0 ,0 ,0 ,0 ,0 ,0 ,0, 0, 0]))
+  const [typehotel, settypehotel]= useState(()=> "")
   useEffect(()=> {
     result_hotel(setlist, query.get("spec"), query.get("l"), query.get("c"), query.get("r"))
-    return ()=> setlist(()=> [])
+    return ()=> setlist(()=> ([]))
   },[query])
   return (
     <div className='aoe-1'>
@@ -36,13 +38,13 @@ const SearchHotel = () => {
                 </div>
                 <FilterByStar reviewstar={reviewstar} setreviewstar={setreviewstar} />
                 <div className='fkkfdgrwketoepre'>
-                    <EntityHotel />
+                    <EntityHotel entities={entities} setentities={setentities} />
                 </div>
-                <TypeRoomHotel />
+                <TypeRoomHotel type={typehotel} settypehotel={settypehotel} />
             </div>
             <div className="rijererwrwe">
                 {
-                    list?.length>0 && listRange?.length<=0 && reviewstar?.length<=0 &&
+                    list?.length>0 && listRange?.length<=0 && typehotel?.length<=0 && reviewstar?.length<=0 &&
                     list?.map((item, key)=> <ResultSearchHotel key={key} {...item} />)
                 }
                 {
@@ -52,6 +54,10 @@ const SearchHotel = () => {
                 {
                     reviewstar?.length>0 &&
                     list?.filter(item=> reviewstar?.includes(parseInt(item.review))).map((item, key)=> <ResultSearchHotel key={key} {...item} />)                    
+                }
+                {
+                  typehotel?.length>0 &&
+                  list?.filter(item=> item.type.toString() === typehotel.toString()).map((item, key)=> <ResultSearchHotel key={key} {...item} />)                    
                 }
             </div>
         </div>
