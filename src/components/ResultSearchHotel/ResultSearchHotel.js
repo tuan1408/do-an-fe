@@ -29,7 +29,7 @@ const ResultSearchHotel = (props) => {
             </div>
         </div>
 
-        <div className='djfjlejwioejqi'>
+        <div className='djfjlejwioejqi' style={{marginLeft: 8}}>
             <HotelIcon />
             <div className='fkfapwokwopewaw'>
                 {

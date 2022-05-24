@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
+import * as Scroll from 'react-scroll'
 
 const TypeRoomHotel = (props) => {
-  const entities2= useMemo(()=> ["Tất cả", "Chọn nhiều nhất","Khách sạn", "Thanh toán khi nhận phòng", "Biệt thự", "Căn hộ", "Nhà nghỉ", "Ưu đãi đặc biệt", "Khu nghỉ dưỡng"], [])
+  const entities2= useMemo(()=> ["Tất cả", "Chọn nhiều nhất","Khách sạn", "Thanh toán khi nhận phòng","Phù hợp gia đình", "Biệt thự", "Căn hộ", "Nhà nghỉ", "Ưu đãi đặc biệt", "Khu nghỉ dưỡng"], [])
   return (
     <div className='fkkfdgrwketoepre'>
         <div style={{marginBottom: 8}}>Loại phòng nghỉ</div>    
@@ -13,12 +14,16 @@ const TypeRoomHotel = (props) => {
     </div>
   )
 }
+export const scroll= Scroll.animateScroll
 const C= (props)=> {
+    
     return (
         <div className='djfiejwaejwew'>
             <input type="radio" name='v'value={props.item} onChange={(e)=> {
+                scroll.scrollToTop()
                 if(e.target.value.toString() === "Tất cả") return props.settypehotel("")
                 props.settypehotel(e.target.value)
+                
             }}  />
             <div className='opdrkoprkwopewe'>{props.item}</div>
         </div>

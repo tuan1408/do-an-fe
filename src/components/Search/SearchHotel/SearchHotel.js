@@ -20,6 +20,10 @@ const SearchHotel = () => {
   const [entities, setentities]= useState(()=> ([0 ,0 ,0 ,0 ,0 ,0 ,0, 0, 0]))
   const [typehotel, settypehotel]= useState(()=> "")
   useEffect(()=> {
+    document.body.style.height= "auto"
+    return ()=> document.body.style.height="100%"
+  }, [])
+  useEffect(()=> {
     result_hotel(setlist, query.get("spec"), query.get("l"), query.get("c"), query.get("r"))
     return ()=> setlist(()=> ([]))
   },[query])
