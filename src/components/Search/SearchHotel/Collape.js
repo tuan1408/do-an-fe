@@ -1,13 +1,20 @@
 import React from 'react'
+import { scroll } from './TypeRoomHotel'
 
-const Collape = () => {
+const Collape = (props) => {
+  const resetall= ()=> {
+    scroll.scrollToTop()
+    props.settypehotel(()=> "")
+    props.setreviewstar(()=> [])
+    props.setListRange(()=> [])
+  }
   return (
     <>
     <div className='kfwekgopef'>
         <div className='sdfsdafdafwrgh'>
             Lọc kết quả 
         </div>
-        <div className='jdefkgjdsfgjdsk'>
+        <div className='jdefkgjdsfgjdsk' style={{cursor: "pointer"}} onClick={resetall}>
             Đặt lại bộ lọc
         </div>
     </div>

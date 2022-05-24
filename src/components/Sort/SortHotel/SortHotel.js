@@ -14,6 +14,9 @@ const SortHotel = (props) => {
         case "Điểm đánh giá":
             props.setlist(_.orderBy(props.list, ['review'], ['desc']))
             return
+        case "Độ phổ biến":
+            props.setlist(_.orderBy(props.list, ["access_views"], ["desc"]))
+            return
         default:
             return
       }

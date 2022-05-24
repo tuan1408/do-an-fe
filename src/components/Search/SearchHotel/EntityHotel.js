@@ -1,29 +1,23 @@
-import axios from 'axios'
-import React, { useMemo } from 'react'
-import { useState } from 'react'
+import React from 'react'
 import { memo } from 'react'
+import { scroll } from './TypeRoomHotel'
 
 const EntityHotel = (props) => {
-  const entities= useMemo(()=> ["Wifi", "Hồ bơi", "Chỗ đậu xe", "Nhà hàng", "Lễ tân 24h", "Thang máy", "Trung tâm thể dục", "Phòng họp", "Đưa đón sân bay"], [])
-  const [filter, setfilter]= useState(()=> ({
-    wifi: 0,
-    pool: 0,
-    parking: 0,
-    restaurant: 0,
-    receptionist: 0,
-    elevator: 0,
-    fitness_center: 0,
-    meeting: 0,
-    airport_shuttle: 0
-  }))
-  
+  // const entities= useMemo(()=> ["Wifi", "Hồ bơi", "Chỗ đậu xe", "Nhà hàng", "Lễ tân 24h", "Thang máy", "Trung tâm thể dục", "Phòng họp", "Đưa đón sân bay"], [])
+ 
   return (
     <>
     <div style={{marginBottom: 8}}>Tiện nghi</div>    
       <div className='gkorkawrklsgr'>
-        {
-          entities?.map((item, key)=> <C key={key} index={key} entities={props.entities} setentities={props.setentities} item={item} />)
-        }
+        <C v={1} item={"Wifi"} setfilter={props.setwifi} filter={props.wifi} />
+        <C v={2} item={"Bể bơi"} setfilter={props.setpool} filter={props.pool} />
+        <C v={3} item={"Bãi đỗ xe"} setfilter={props.setparking} filter={props.parking} />
+        <C v={4} item={"Nhà hàng"} setfilter={props.setrestaurant} filter={props.restaurant} />
+        <C v={5} item={"Lễ tân 24h"} setfilter={props.setreceptionist} filter={props.receptionist} />
+        <C v={6} item={"Thang máy"} setfilter={props.setfitness_center} filter={props.fitness_center} />
+        <C v={7} item={"Trung tâm thể dục"} setfilter={props.setelevator} filter={props.elevator} />
+        <C v={8} item={"Phòng họp"} setfilter={props.setmeeting} filter={props.meeting} />
+        <C v={9} item={"Đưa đón sân bay"} setfilter={props.setairport_shuttle} filter={props.airport_shuttle} />
       </div>
     </>
   )
@@ -32,26 +26,19 @@ const EntityHotel = (props) => {
 const C= (props)=> {
   
   const handle= (e)=> {
-    console.log(e.target.getAttribute("index"))
-    
+    scroll.scrollToTop()
+    // es-
+    if(props.filter== "") {
+      props.setfilter(()=> e.target.value)
+    }
+    else {
+      props.setfilter(()=> "")
+    }
   }
-  const filterbyserver= async (filter)=> {
-    const res= await axios({
-      url: "http://localhost:4000/v2/api/entities/hotel",
-      method: "post",
-      responseType: "json",
-      timeout: 100000,
-      timeoutErrorMessage: "timeout request",
-      data: {
-        query_array: filter
-      }
-    })
-    const result= await res.data
-    console.log(result)
-  }
+  
   return (
     <div className='djfiejwaejwew'>
-      <input type="checkbox" name='r' index={props.index} value={props.item} onChange={(e)=> handle(e)} />
+      <input type="checkbox" name='r' value={props.v} onChange={(e)=> handle(e)} />
       <div className='opdrkoprkwopewe'>{props.item}</div>
     </div>
   )
