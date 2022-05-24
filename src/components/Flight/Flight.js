@@ -9,7 +9,7 @@ const Flight = (props) => {
   const [bookplane, setbookplane]= useState(()=> true)
   return (
     <>
-      {/* <button onClick={()=> console.log(moment("00:30 24-05-2022", "hh:mm DD-MM-YYYY").valueOf())}>Click</button> */}
+      {/* <button onClick={()=> console.log(moment("23-06-2022", "DD-MM-YYYY").valueOf())}>Click</button> */}
       <div style={{position: "absolute", top: 0, left: 0, backgroundImage: "url(https://cdn6.agoda.net/images/MVC/default/background_image/illustrations/bg-agoda-homepage.png)", width: "100%", height: 400, backgroundRepeat: "no-repeat", zIndex: -10, backgroundSize: "contain"}}>
 
       </div>

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const Search_flight= async (setsearchflight, setresultsearch, a,b,c,d)=> {
+export const search_flight_= async (setsearchflight, setresultsearch, a,b,c,d)=> {
     const res= axios({
         url: "http://localhost:4000/api/v2/airport/codeairport",
         method: "get",
