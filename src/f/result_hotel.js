@@ -1,6 +1,9 @@
 import axios from "axios"
+import { fake_sleep } from "./fake_sleep"
 
-export const result_hotel= async (list,a ,b,c, d)=> {
+export const result_hotel= async (list,a ,b,c, d, setloading)=> {
+    setloading(()=> true)
+    await fake_sleep(1500)
     const res= await axios({
         url: "http://localhost:4000/v2/api/result/hotel",
         method: "post",
@@ -18,5 +21,6 @@ export const result_hotel= async (list,a ,b,c, d)=> {
         }
     })
     const result= await res.data
+    setloading(()=> false)
     return list(()=> result)
 }

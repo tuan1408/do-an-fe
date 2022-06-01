@@ -71,6 +71,7 @@ export default function D(props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={viLocale} >
       <DatePicker
+        disabled={props.disable || false}
         open={props.open}
         showToolbar={true}
         disableOpenPicker={true}

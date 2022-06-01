@@ -1,12 +1,28 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import useQuery from '../../../../f/get_query_parameter'
+import * as Scroll from "react-scroll"
+import Loading from '../../../../Loading/Loading'
 
 const CostFlight = (props) => {
+  let scroll= Scroll.animateScroll
+  const [loading, setLoading]= useState(()=> false)
+  const query= useQuery()
   return (
     <div className="fsm-1">
       {parseInt(props?.discount) > 0 ?  <CostWithDiscount cost_adult={props.cost_adult} discount={props.discount} />: <CostWithoutDiscount cost_adult={props.cost_adult} />}
-        <div className="iwtap-3">
-            Chọn
-        </div>
+        <Link onClick={()=> {
+            scroll.scrollToTop()
+            setLoading(()=> true)
+        }} className="iwtap-3" to={"/pre-booking/flight?id="+props.id_flight} style={{textDecoration: "none", color: "#fff"}} state={{ps: query.get("ps") || props.ps, dt: query.get("dt") || props.dt, origin: props[0]?.location_airport || props.origin, destination: props[1]?.location_airport || props.destination, sc: query.get("sc") || props.sc}}>
+            <div>
+                Chọn
+            </div>
+        </Link>
+        {
+            loading=== true &&
+            <Loading setLoading={setLoading} /> 
+        }
     </div>        
   )
 }

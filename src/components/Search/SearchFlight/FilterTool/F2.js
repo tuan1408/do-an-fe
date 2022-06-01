@@ -13,7 +13,7 @@ const F2= (props)=> {
     useEffect(()=> {
         document.addEventListener("mousedown", outsidefunction)
         return ()=> document.removeEventListener("mousedown", outsidefunction)
-    }, [])  
+    }, []) 
     return (
       <div className="sqo-1 oifairo-q2" ref={myRef}>
         <div className="qra-1" onClick={()=> setopensuggest(()=> true)}>
@@ -24,19 +24,19 @@ const F2= (props)=> {
         </div>
         {
           opensuggest=== true &&
-          <div className="dsqeo-1">
+          <div className="dsqeo-1" data-check="1">
             <div className="ddoeqw-1">
               <div className="teai-1"> 
                 Giờ cất cánh
               </div>
               <div className="sjwroe-1">
-                <div >
-                  <M1 settimeorigin={props.settimeorigin} b={"Buổi sáng sớm"} t={"00:00 - 06:00"} />
-                  <M1 settimeorigin={props.settimeorigin} b={"Buổi sáng"} t={"06:00 - 12:00"} />
+                <div>
+                  <M1 uid={1} settimeorigin={props.settimeorigin} b={"Buổi sáng sớm"} t={"00:00 - 06:00"} />
+                  <M1 uid={2} settimeorigin={props.settimeorigin} b={"Buổi sáng"} t={"06:00 - 12:00"} />
                 </div>
                 <div>
-                  <M1 settimeorigin={props.settimeorigin} b={"Buổi chiều"} t={"12:00 - 18:00"} />
-                  <M1 settimeorigin={props.settimeorigin} b={"Buổi tối"} t={"18:00 - 24:00"} />
+                  <M1 uid={3} settimeorigin={props.settimeorigin} b={"Buổi chiều"} t={"12:00 - 18:00"} />
+                  <M1 uid={4} settimeorigin={props.settimeorigin} b={"Buổi tối"} t={"18:00 - 24:00"} />
                 </div>
               </div>
             </div>
@@ -49,12 +49,12 @@ const F2= (props)=> {
               </div>
               <div className="sjwroe-1">
                 <div >
-                  <M2 settimedestination={props.settimedestination} b={"Buổi sáng sớm"} t={"00:00 - 06:00"} />
-                  <M2 settimedestination={props.settimedestination} b={"Buổi sáng"} t={"06:00 - 12:00"} />
+                  <M2 uid={1} settimedestination={props.settimedestination} b={"Buổi sáng sớm"} t={"00:00 - 06:00"} />
+                  <M2 uid={2} settimedestination={props.settimedestination} b={"Buổi sáng"} t={"06:00 - 12:00"} />
                 </div>
                 <div>
-                  <M2 settimedestination={props.settimedestination} b={"Buổi chiều"} t={"12:00 - 18:00"} />
-                  <M2 settimedestination={props.settimedestination} b={"Buổi tối"} t={"18:00 - 24:00"} />
+                  <M2 uid={3} settimedestination={props.settimedestination} b={"Buổi chiều"} t={"12:00 - 18:00"} />
+                  <M2 uid={4} settimedestination={props.settimedestination} b={"Buổi tối"} t={"18:00 - 24:00"} />
                 </div>
               </div>
             </div>

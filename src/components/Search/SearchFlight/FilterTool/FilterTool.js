@@ -12,14 +12,6 @@ const FilterTool = (props) => {
               Bộ lọc: 
             </div>
             <div className="wai-1">
-              <div className="sqo-1">
-                <div className="qra-1">
-                  Điểm dừng
-                </div>
-                <div className="dko-1">
-    
-                </div>
-              </div>
               <F2 settimedestination={props.settimedestination} settimeorigin={props.settimeorigin} resultsearch={props.resultsearch} setfindbytimeflight={props.setfindbytimeflight} findbytimeflsetfindbytimeflight={props.findbytimeflsetfindbytimeflight} />
               <F3 resultsearch={props.resultsearch} setfindbybrand={props.setfindbybrand} findbybrand={props.findbybrand} />
               <F4 setListRange={props.setListRange} findbyrangecost={props.findbyrangecost} setfindbyrangecost={props.setfindbyrangecost} setresultsearch={props.setresultsearch} settimedestination={props.settimedestination} settimeorigin={props.settimeorigin} resultsearch={props.resultsearch} setfindbytimeflight={props.setfindbytimeflight}  />

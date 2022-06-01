@@ -1,6 +1,7 @@
 import axios from "axios"
+import { fake_sleep } from "./fake_sleep"
 
-export const search_flight_= async (setsearchflight, setresultsearch, a,b,c,d)=> {
+export const search_flight_= async (setsearchflight, setresultsearch, a,b,c,d, setloading)=> {
     const res= axios({
         url: "http://localhost:4000/api/v2/airport/codeairport",
         method: "get",
@@ -29,10 +30,13 @@ export const search_flight_= async (setsearchflight, setresultsearch, a,b,c,d)=>
             from_client: "desktop"
         }
     })
+    setloading(()=> true)
+    await fake_sleep(2000)
     const result= await Promise.all([res, ress])
     const finalresult1= await result[0].data
     const finalresult2= await result[1].data
     // const result= await res.data
+    setloading(()=> false)
     setresultsearch(()=> finalresult2)
     return setsearchflight(()=> finalresult1)
 }

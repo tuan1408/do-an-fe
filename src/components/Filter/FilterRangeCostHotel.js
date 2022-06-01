@@ -31,3 +31,29 @@ export default function FilterRangeCostHotel(props) {
     </Box>
   );
 }
+
+export function FilterRangeCostHotel2(props) {
+  const [value, setValue] = React.useState([props.mincost?.cost_adult, props.maxcost?.cost_adult]);
+  React.useEffect(()=> {
+    setValue(()=> [parseInt(props.mincost?.cost_adult_hotel) + parseInt(props.mincost?.cost_adult_flight), parseInt(props.maxcost?.cost_adult_hotel)+ parseInt(props.maxcost?.cost_adult_flight)])
+  }, [props.mincost?.cost_adult_hotel,props.mincost?.cost_adult_flight, props.maxcost?.cost_adult_flight, props.maxcost?.cost_adult_hotel])
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    props.setListRange(()=> newValue)
+  };
+
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Slider
+        getAriaLabel={() => 'Cost hotel range'}
+        value={value}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+        getAriaValueText={valuetext}
+        min={parseInt(props.mincost?.cost_adult_hotel) + parseInt(props.mincost?.cost_adult_flight)}
+        max={parseInt(props.maxcost?.cost_adult_hotel)+ parseInt(props.maxcost?.cost_adult_flight)}
+        step={1000}
+      />
+    </Box>
+  );
+}

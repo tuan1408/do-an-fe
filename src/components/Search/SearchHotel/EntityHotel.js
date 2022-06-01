@@ -28,7 +28,7 @@ const C= (props)=> {
   const handle= (e)=> {
     scroll.scrollToTop()
     // es-
-    if(props.filter== "") {
+    if(props.filter.toString() === "") {
       props.setfilter(()=> e.target.value)
     }
     else {

@@ -11,6 +11,7 @@ import EntityHotel from './EntityHotel'
 import Collape from './Collape'
 import TypeRoomHotel from './TypeRoomHotel'
 import FilterByStar from './FilterByStar'
+import { CircularProgress } from '@mui/material'
 
 const SearchHotel = () => {
   const query= useQuery()
@@ -28,12 +29,13 @@ const SearchHotel = () => {
   const [elevator, setelevator]= useState(()=> "")
   const [meeting, setmeeting]= useState(()=> "")
   const [airport_shuttle, setairport_shuttle]= useState(()=> "")
+  const [loading, setloading]= useState(()=> false)
   useEffect(()=> {
     document.body.style.height= "auto"
     return ()=> document.body.style.height="100%"
   }, [])
   useEffect(()=> {
-    result_hotel(setlist, query.get("spec"), query.get("l"), query.get("c"), query.get("r"))
+    result_hotel(setlist, query.get("spec"), query.get("l"), query.get("c"), query.get("r"), setloading)
     return ()=> setlist(()=> ([]))
   },[query])
   return (
@@ -60,28 +62,38 @@ const SearchHotel = () => {
             </div>
             <div className="rijererwrwe">
               {
-                (wifi+pool+parking+restaurant+receptionist+elevator+fitness_center+meeting+airport_shuttle).toString().trim().length> 0 &&
-                list?.filter(item=> (item.wifi+item.pool+item.parking+item.restaurant+item.receptionist+item.elevator+item.fitness_center+item.meeting+item.airport_shuttle).toString().trim().includes((wifi+pool+parking+restaurant+receptionist+elevator+fitness_center+meeting+airport_shuttle).toString().trim())=== true)?.map((item, key)=> <ResultSearchHotel key={key} {...item} />)
-              }
-              {
-                  (wifi+pool+parking+restaurant+receptionist+elevator+fitness_center+meeting+airport_shuttle).toString().trim().length<= 0 &&
-                  list?.length>0 && listRange?.length<=0 && typehotel?.length<=0 && reviewstar?.length<=0 &&
-                  list?.map((item, key)=> <ResultSearchHotel key={key} {...item} />)
-              }
-              {
-                  listRange?.length>0 && 
-                  list?.filter(item=> parseInt(item.cost_adult)>= parseInt(Math.min.apply(Math, listRange)) && parseInt(item.cost_adult)<= parseInt(Math.max.apply(Math, listRange))).map((item, key)=> <ResultSearchHotel key={key} {...item} />)
-              }
-              {
-                  reviewstar?.length>0 &&
-                  list?.filter(item=> reviewstar?.includes(parseInt(item.review))).map((item, key)=> <ResultSearchHotel key={key} {...item} />)                    
-              }
-              {
-                typehotel?.length>0 &&
-                list?.filter(item=> item.type.toString() === typehotel.toString()).map((item, key)=> <ResultSearchHotel key={key} {...item} />)                    
-              }
-              {
-                list?.length<=0 && <div>Không tìm thấy thứ bạn cần</div>
+                loading=== true ? 
+                <div style={{width: "100%", height: 100, display: "flex", justifyContent: "center", alignItems: 'center', gap: 5, zIndex: 99999999}}>
+                  <span style={{fontSize: 24, fontWeight: 600, color: "#3a3b3c"}}>Searching...</span>
+                  <CircularProgress />
+                </div> 
+                :
+                <>
+                  {
+                    (wifi+pool+parking+restaurant+receptionist+elevator+fitness_center+meeting+airport_shuttle).toString().trim().length> 0 &&
+                    list?.filter(item=> (item.wifi+item.pool+item.parking+item.restaurant+item.receptionist+item.elevator+item.fitness_center+item.meeting+item.airport_shuttle).toString().trim().includes((wifi+pool+parking+restaurant+receptionist+elevator+fitness_center+meeting+airport_shuttle).toString().trim())=== true)?.map((item, key)=> <ResultSearchHotel key={key} {...item} />)
+                  }
+                  {
+                      (wifi+pool+parking+restaurant+receptionist+elevator+fitness_center+meeting+airport_shuttle).toString().trim().length<= 0 &&
+                      list?.length>0 && listRange?.length<=0 && typehotel?.length<=0 && reviewstar?.length<=0 &&
+                      list?.map((item, key)=> <ResultSearchHotel key={key} {...item} />)
+                  }
+                  {
+                      listRange?.length>0 && 
+                      list?.filter(item=> parseInt(item.cost_adult)>= parseInt(Math.min.apply(Math, listRange)) && parseInt(item.cost_adult)<= parseInt(Math.max.apply(Math, listRange))).map((item, key)=> <ResultSearchHotel key={key} {...item} />)
+                  }
+                  {
+                      reviewstar?.length>0 &&
+                      list?.filter(item=> reviewstar?.includes(parseInt(item.review))).map((item, key)=> <ResultSearchHotel key={key} {...item} />)                    
+                  }
+                  {
+                    typehotel?.length>0 &&
+                    list?.filter(item=> item.type.toString() === typehotel.toString()).map((item, key)=> <ResultSearchHotel key={key} {...item} />)                    
+                  }
+                  {
+                    list?.length<=0 && <div>Không tìm thấy thứ bạn cần</div>
+                  }
+                </>
               }
             </div>
         </div>

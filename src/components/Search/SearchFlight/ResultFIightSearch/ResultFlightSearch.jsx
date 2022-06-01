@@ -25,7 +25,7 @@ const ResultFlightDetail= (props)=> {
               <div className="eoq-5">
               </div>
             </div>
-            <CostFlight discount={props.discount} cost_adult={props.cost_adult} />
+            <CostFlight discount={props.discount} cost_adult={props.cost_adult} {...props} />
           </div>
         </div>
         <div className="css-2">

@@ -7,19 +7,27 @@ import { hotel_autocomplete } from '../../f/hotel_autocomplete'
 import D from '../Date/D'
 
 const initialValue = new Date()
-const Hotel = () => {
-  const [timenight, settimenight]= useState(()=> 1)
-  const [value, setValue]= useState(initialValue)
-  const [choose, setchoose]= useState(()=> "")
-  const [addi, setaddi]= useState(()=> "")
+const Hotel = (props) => {
   return (
-    <div className="cp-2">
+    <div className={`cp-2 ${props.classNameWithout|| "ews_4"} ${props.classNamesecret|| "fkwe-d"}`}>
         <div className="pg-1">
-            <E addi={addi} setaddi={setaddi} choose={choose} setchoose={setchoose} />
-            <br />
-            <F value={value} setValue={setValue} timenight={timenight} settimenight={settimenight} />
-            <br />
-            <G addi={addi} value={value} timenight={timenight} choose={choose} setchoose={setchoose} />
+            {
+                props.chooseAdd=== true &&
+                <div style={{padding: 8, fontSize: 18, color: "#2e89ff", marginBottom: 10}}>
+                    <input type="checkbox" style={{width: 20, height: 20}} onChange={()=> props.setNotFindHotel(prev=> !prev)} />
+                    <span>Tìm khách sạn ở thành phố hoặc ngày khác</span>
+                </div>
+            }
+            {
+                props.notFindHotel!== true &&
+                <>
+                    <E {...props} addi={props.addi} setaddi={props.setaddi} choose={props.choose} setchoose={props.setchoose} />
+                    <br />
+                    <F {...props} value={props.value} setValue={props.setValue} timenight={props.timenight} settimenight={props.settimenight} />
+                    <br />
+                </>
+            }
+            <G {...props} addi={props.addi} value={props.value} timenight={props.timenight} choose={props.choose} setchoose={props.setchoose} />
         </div>
     </div>
   )
@@ -112,7 +120,10 @@ const F= (props)=> {
     
     return (
         <div className="ce-1">
-            <F1 value={props.value} setValue={props.setValue} />
+            {
+                props.notFindHotel!== true &&
+                <F1 value={props.value} setValue={props.setValue} disable={props.disable} />
+            }
             <F2 value={props.value} timenight={props.timenight} settimenight={props.settimenight} /> 
             <F3 value={props.value} timenight={props.timenight} />
         </div>
@@ -141,9 +152,9 @@ const F1= (props)=> {
                 </div>  
                 <div className="jw-1">
                     <p>
-                        {moment(`${new Date(props.value).getDate().toString()}${((parseInt(new Date(props.value).getMonth() +1).toString()) <10) ? '0' + (parseInt(new Date(props.value).getMonth() ) + 1).toString() : (parseInt(new Date(props.value).getMonth()) + 1).toString()}${new Date(props.value).getFullYear().toString()}`, "DDMMYYYY").format("dddd")},&nbsp;   
+                        {moment(new Date(props?.value)).format("dddd")},&nbsp;   
                     </p>
-                    <D open={opensuggest} value={props.value} setValue={props.setValue} initialValue={initialValue} />
+                    <D disable={props.disable} open={opensuggest} value={props.value} setValue={props.setValue} initialValue={initialValue} />
                 </div>
             </div>
         </div>
@@ -194,7 +205,7 @@ const F2= (props)=> {
                                         {parseInt(item) + 1} đêm
                                     </div>
                                     <div className="vk-2" style={{textTransform: "capitalize"}}>
-                                        {moment(moment(`${new Date(props.value).getDate().toString()}${((parseInt(new Date(props.value).getMonth() +1).toString()) <10) ? '0' + (parseInt(new Date(props.value).getMonth() ) + 1).toString() : (parseInt(new Date(props.value).getMonth()) + 1).toString()}${new Date(props.value).getFullYear().toString()}`, "DDMMYYYY")).add(parseInt(item) + 1, "days").format("dddd, DD/MM/YYYY")}
+                                        {moment(moment(new Date(props?.value))).add(parseInt(item) + 1, "days").format("dddd, DD/MM/YYYY")}
                                     </div>
                                 </div>
                             </div>)
@@ -214,18 +225,14 @@ const F3= (props)=> {
             </div>
             <div className="es-1 ld-1 er-1" style={{height: 40, display: "flex", justifyContent: 'center',alignItems: "center"}}>
                 <div className="jw-1" style={{height: "100%", textTransform: "capitalize", display: "flex", alignItems: "center"}}>
-                    {moment(moment(`${new Date(props.value).getDate().toString()}${((parseInt(new Date(props.value).getMonth() +1).toString()) <10) ? '0' + (parseInt(new Date(props.value).getMonth() ) + 1).toString() : (parseInt(new Date(props.value).getMonth()) + 1).toString()}${new Date(props.value).getFullYear().toString()}`, "DDMMYYYY")).add(parseInt(props.timenight), "days").format("dddd, DD/MM/YYYY")}
+                    {moment(moment(new Date(props?.value))).add(parseInt(props.timenight), "days").format("dddd, DD/MM/YYYY")}
                 </div>
             </div>
         </div>
     )
 }
 const G= (props)=> {
-    const [data, setData]= useState(()=> ({
-        adult: 1,
-        kid: 0,
-        room: 1
-    }))
+    
     const [opensuggest, setopensuggest]= useState(()=> false)
     const myRef= useRef()
     const outsidefunction= (e)=> {
@@ -248,7 +255,7 @@ const G= (props)=> {
                         <div className="rw-1">
                             <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/9/98a7579ccebe5a779c32bc1da67853a8.svg" width="24" height="24" alt="open" />
                         </div>  
-                        <input type="text" value={`${data.adult} người lớn, ${data.kid} trẻ em, ${data.room} phòng`} readOnly={true} spellCheck={true} aria-invalid={false} autoCapitalize={"sentences"} autoComplete={"on"} dir="auto" className="it-1"  />
+                        <input type="text" value={`${props.data.adult} người lớn, ${props.data.kid} trẻ em, ${props.data.room} phòng`} readOnly={true} spellCheck={true} aria-invalid={false} autoCapitalize={"sentences"} autoComplete={"on"} dir="auto" className="it-1"  />
                         <div className="os-1" style={{transform: opensuggest=== false ? "rotate(0)" : "rotate(-180deg)",}}>
                             <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/9/96f78c74ef882223cecd102ba1e47812.svg" width="16" height="16" alt="open" />
                         </div>
@@ -261,13 +268,13 @@ const G= (props)=> {
                                         <div>Người lớn</div>
                                     </div>
                                     <div>   
-                                        <button disabled={(parseInt(data.adult) === 0) ? true : false} className="gh-1" onClick={()=> setData(prev=> ({...prev, adult: parseInt(data.adult) - 1}))}>
+                                        <button disabled={(parseInt(props.data.adult) === 0) ? true : false} className="gh-1" onClick={()=> props.setData(prev=> ({...prev, adult: parseInt(props.data.adult) - 1}))}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSymbolAddMinus"><path d="M5 12H19" stroke="#0194f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                         <div className="rw-1">
-                                            {data.adult}
+                                            {props.data.adult}
                                         </div>
-                                        <button className="gh-1" onClick={()=> setData(prev=> ({...prev, adult: parseInt(data.adult) + 1}))}>
+                                        <button className="gh-1" onClick={()=> props.setData(prev=> ({...prev, adult: parseInt(props.data.adult) + 1}))}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSymbolAddPlus"><path d="M12 5V19M5 12H19" stroke="#0194f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                     </div>
@@ -278,13 +285,13 @@ const G= (props)=> {
                                         <div>Trẻ em</div>
                                     </div>
                                     <div>   
-                                        <button disabled={(parseInt(data.kid) === 0) ? true : false} className="gh-1" onClick={()=> setData(prev=> ({...prev, kid: parseInt(data.kid) - 1}))}>
+                                        <button disabled={(parseInt(props.data.kid) === 0) ? true : false} className="gh-1" onClick={()=> props.setData(prev=> ({...prev, kid: parseInt(props.data.kid) - 1}))}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSymbolAddMinus"><path d="M5 12H19" stroke="#0194f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                         <div className="rw-1">
-                                            {data.kid}
+                                            {props.data.kid}
                                         </div>
-                                        <button className="gh-1" onClick={()=> setData(prev=> ({...prev, kid: parseInt(data.kid) + 1}))}>
+                                        <button className="gh-1" onClick={()=> props.setData(prev=> ({...prev, kid: parseInt(props.data.kid) + 1}))}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSymbolAddPlus"><path d="M12 5V19M5 12H19" stroke="#0194f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                     </div>
@@ -295,13 +302,13 @@ const G= (props)=> {
                                         <div>Phòng</div>
                                     </div>
                                     <div>   
-                                        <button disabled={(parseInt(data.room) === 0) ? true : false} className="gh-1" onClick={()=> setData(prev=> ({...prev, room: parseInt(data.room) - 1}))}>
+                                        <button disabled={(parseInt(props.data.room) === 0) ? true : false} className="gh-1" onClick={()=> props.setData(prev=> ({...prev, room: parseInt(props.data.room) - 1}))}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSymbolAddMinus"><path d="M5 12H19" stroke="#0194f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                         <div className="rw-1">
-                                            {data.room}
+                                            {props.data.room}
                                         </div>
-                                        <button className="gh-1" onClick={()=> setData(prev=> ({...prev, room: parseInt(data.room) + 1}))}>
+                                        <button className="gh-1" onClick={()=> props.setData(prev=> ({...prev, room: parseInt(props.data.room) + 1}))}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSymbolAddPlus"><path d="M12 5V19M5 12H19" stroke="#0194f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                                         </button>
                                     </div>
@@ -315,14 +322,17 @@ const G= (props)=> {
                             </div>
                         }
                     </div>
-                    <div>
-                        <Link to={"/hotel/search?spec=" + moment(new Date(props.value)).format("DD-MM-YYYY")+"."+moment(moment(`${new Date(props.value).getDate().toString()}${((parseInt(new Date(props.value).getMonth() +1).toString()) <10) ? '0' + (parseInt(new Date(props.value).getMonth() ) + 1).toString() : (parseInt(new Date(props.value).getMonth()) + 1).toString()}${new Date(props.value).getFullYear().toString()}`, "DDMMYYYY")).add(parseInt(props.timenight), "days").format("DD-MM-YYYY") +"."+props.timenight+"&l="+props.choose.toString().replaceAll(" ", "-") + "&c="+ (parseInt(data.adult) + parseInt(data.kid)).toString()+"&r=" + (parseInt(data.room)).toString()} style={{textDecoration: "none"}} state={{location_travel: props.addi}}>
-                            <div className="ld-1">
-                                <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6109dccccb4bbae97f5ded035b3853d9.svg" alt="open" />
-                                <div className="so-1">Tìm khách sạn</div>
-                            </div>
-                        </Link>
-                    </div>
+                    {
+                        props.notfindSearch!==true &&
+                        <div>
+                            <Link to={"/hotel/search?spec=" + moment(new Date(props.value)).format("DD-MM-YYYY")+"."+moment(moment(new Date(props?.value))).add(parseInt(props.timenight), "days").format("DD-MM-YYYY") +"&tn="+props.timenight+"&l="+props.choose.toString().replaceAll(" ", "-") + "&c="+ (parseInt(props.data.adult) + parseInt(props.data.kid)).toString()+"&g="+props.data.adult+"."+props.data.kid+"&r=" + (parseInt(props.data.room)).toString()} style={{textDecoration: "none"}} state={{location_travel: props.addi}}>
+                                <div className="ld-1">
+                                    <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6109dccccb4bbae97f5ded035b3853d9.svg" alt="open" />
+                                    <div className="so-1">Tìm khách sạn</div>
+                                </div>
+                            </Link>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
