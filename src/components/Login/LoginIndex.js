@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { loginfacebook } from '../firebase/facebook'
 import { keeplogin, logingoogle, signout } from '../firebase/google'
 
@@ -27,7 +28,8 @@ const LoginIndex = (props) => {
   if(props.uid?.length> 0) {
       return (
         <div style={{display: "flex", justifyContent: "center", position: "relative", alignItems: "center", gap: 10, cursor: "pointer"}}>
-            <div style={{userSelect: "none"}} onClick={()=> setopen(prev=> !prev)}>
+            <div style={{userSelect: "none", display: "flex", justifyContent: 'center',alignItems: "center", gap: 10}} onClick={()=> setopen(prev=> !prev)}>
+                <img src={user.photo} alt="open" style={{width: 36, height: 36, objectFit: "cover", borderRadius: "50%"}} />
                 {user.name}
             </div>
             <div>
@@ -51,6 +53,18 @@ const LoginIndex = (props) => {
                         <div style={{marginTop: 5}}>
                             Phonenumber: {user.phonenumer}
                         </div>
+                    }
+                    {
+                        props?.uid=== "20KOBh5OMwZfIYQUggr625feyR53" &&
+                        <div style={{width: "100%", display: "flex",justifyContent: 'center', alignItems: "center", marginTop: 7}}>
+                            <Link to="/admin/manage" state={{uid: props?.uid}} style={{textDecoration: "none"}}>
+                                <div onClick={()=> {
+                                    setopen(()=> false)
+                                }} style={{padding: 10, borderRadius: 10, backgroundColor: "#2e89ff", color: "#fff", fontWeight: 600}}>
+                                    Manage app
+                                </div>
+                            </Link>
+                    </div>    
                     }
                     <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: 7}}>
                         <div onClick={()=> {

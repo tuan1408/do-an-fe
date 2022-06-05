@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const FormCustomer = (props) => {
+  const [user, setuser]= useState(()=> ({
+    nickname: "",
+    name: "",
+    surname: "",
+    date_birth: 0,
+    month_birth: 0,
+    year_birth: 0,
+    nationality: ""
+  }))
   return (
     <div style={{width: '100%', maxWidth: 1024, background: "#f2f0f5", padding: 10, borderRadius: 8, boxSizing: "border-box", margin: "10px 0", backgroundColor: "#fff"}}>
       <div className='fksopkopwoqwa' style={{width: 632, height: "auto" }}>
@@ -17,7 +26,7 @@ const FormCustomer = (props) => {
           Danh xưng
         </div>
         <div>
-          <input type="text" style={{width: 198, height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+          <input onChange={(e)=> setuser(prev=> ({...prev, nickname: e.target.value}))} type="text" style={{width: 198, height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
         </div>
       </div>
       <br />
@@ -27,7 +36,7 @@ const FormCustomer = (props) => {
             Họ (vd: Nguyen)
           </div>
           <div style={{width: "100%"}}>
-            <input type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+            <input onChange={(e)=> setuser(prev=> ({...prev, name: e.target.value}))} type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
             <div style={{fontSize: 12, color: "#3a3b3c"}}>như trên CMND (không dấu)</div>
           </div>
         </div>
@@ -36,7 +45,7 @@ const FormCustomer = (props) => {
             Tên đệm và tên (vd: Thi Ngoc Anh)
           </div>
           <div style={{width: "100%"}}>
-            <input type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+            <input onChange={(e)=> setuser(prev=> ({...prev, surname: e.target.value}))} type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
             <div style={{fontSize: 12, color: "#3a3b3c"}}>như trên CMND (không dấu)</div>
           </div>
         </div>
@@ -47,13 +56,13 @@ const FormCustomer = (props) => {
           <div style={{width: "100%"}}>
             <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", boxSizing: "border-box", gap: 10}}>
               <div style={{flex: "1 1 0"}}>
-                <input type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+                <input onChange={(e)=> setuser(prev=> ({...prev, date_birth: parseInt(e.target.value)}))} type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
               </div>
               <div style={{flex: "2 1 0"}}>
-                <input type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+                <input onChange={(e)=> setuser(prev=> ({...prev, month_birth: parseInt(e.target.value)}))} type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
               </div>
               <div style={{flex: "1 1 0"}}>
-                <input type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+                <input onChange={(e)=> setuser(prev=> ({...prev, year_birth: parseInt(e.target.value)}))} type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
               </div>
             </div>
             <div style={{fontSize: 12, color: "#3a3b3c"}}>Hành khách người lớn (trên 12 tuổi)</div>
@@ -64,7 +73,7 @@ const FormCustomer = (props) => {
             Quốc tịch
           </div>
           <div style={{width: "100%"}}>
-            <input type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
+            <input onChange={(e)=> {setuser(prev=> ({...prev, nationality: e.target.value}))}} onBlur={()=> props.setalluser(prev=> ([...prev,user]))} type="text" style={{width: "100%", height: 40, borderRadius: 8, border: "1px solid #dfe1e2"}} />
             <div style={{fontSize: 12, color: "#3a3b3c"}}>Ví dụ: Việt Nam</div>
           </div>
         </div>

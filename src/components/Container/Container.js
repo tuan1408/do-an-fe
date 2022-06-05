@@ -5,11 +5,12 @@ import Combo from '../ComboHotelFlight/Combo'
 import BookTicketPlane from '../Flight/BookTicketPlane'
 import SelectType from '../Flight/SelectType'
 import Hotel from '../Hotel/Hotel'
+import Suggest from './Suggest'
 // import moment from 'moment'
 const initialValue = new Date()
 
 const Container = (props) => {
-  const [bookplane, setbookplane]= useState(()=> true)
+  
   const [origin,  setorigin]= useState(()=> ({
   location_airport: "Đà Nẵng",
   code_airport: "DAN"
@@ -41,13 +42,12 @@ const Container = (props) => {
   const query= useQuery()
   return (
     <>
-      {/* <button onClick={()=> console.log(moment("23-06-2022", "DD-MM-YYYY").valueOf())}>Click</button> */}
       <div style={{position: "absolute", top: 60, left: 0, backgroundImage: "url(https://cdn6.agoda.net/images/MVC/default/background_image/illustrations/bg-agoda-homepage.png)", width: "100%", height: 400, backgroundRepeat: "no-repeat", zIndex: 99, backgroundSize: "contain"}}>
       </div>
       <div className="gl-2" style={{position: "relative", top: 180, zIndex: 100}}>
-          <SelectType setbookplane={setbookplane} />
+          <SelectType setbookplane={props.setbookplane} />
           {
-            (bookplane=== true || query.get("q")=== "flight") &&
+            (props.bookplane=== true || query.get("q")=== "flight") &&
             <BookTicketPlane 
               origin={origin} 
               setorigin={setorigin} 
@@ -64,7 +64,7 @@ const Container = (props) => {
               /> 
           }
           {
-            (bookplane=== false || query.get("q")=== "hotel") &&
+            (props.bookplane=== false || query.get("q")=== "hotel") &&
             <Hotel
               timenight={timenight}
               settimenight={settimenight}
@@ -79,9 +79,16 @@ const Container = (props) => {
             />
           }
           {
-            (bookplane=== undefined || query.get("q")=== "combo") &&
+            (props.bookplane=== undefined || query.get("q")=== "combo") &&
             <Combo />
           } 
+          <div style={{display: "flex", justifyContent: "center", width: "100%", flexDirection: 'column', marginTop: 50}}>
+            <div style={{fontSize: 24, fontWeight: 600, textAlign: "center"}}>
+              Những chỗ nghỉ nổi bật khuyến nghị cho bạn 
+            </div>
+            <br />
+            <Suggest />
+          </div>
       </div>
     </>
   )

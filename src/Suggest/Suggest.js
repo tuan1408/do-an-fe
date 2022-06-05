@@ -27,6 +27,8 @@ const Suggest = (props) => {
             {
              props.hotel=== true && data?.length>0 && _.shuffle(data)?.map((item, key)=> <ResultSearchHotel key={key} {...item} {...location.state} ooo1={true} />)
             }
+
+              
             {
               props.flight=== true && data?.length>0 && _.shuffle(data)?.map((item, key)=> <ResultFlightDetail key={key} {...item} {...location.state} ooo1={true} />)
             }

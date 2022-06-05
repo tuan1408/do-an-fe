@@ -11,14 +11,17 @@ const CostFlight = (props) => {
   return (
     <div className="fsm-1">
       {parseInt(props?.discount) > 0 ?  <CostWithDiscount cost_adult={props.cost_adult} discount={props.discount} />: <CostWithoutDiscount cost_adult={props.cost_adult} />}
-        <Link onClick={()=> {
-            scroll.scrollToTop()
-            setLoading(()=> true)
-        }} className="iwtap-3" to={"/pre-booking/flight?id="+props.id_flight} style={{textDecoration: "none", color: "#fff"}} state={{ps: query.get("ps") || props.ps, dt: query.get("dt") || props.dt, origin: props[0]?.location_airport || props.origin, destination: props[1]?.location_airport || props.destination, sc: query.get("sc") || props.sc}}>
-            <div>
-                Chọn
-            </div>
-        </Link>
+        {
+            props.xxxx !== true &&
+            <Link onClick={()=> {
+                scroll.scrollToTop()
+                setLoading(()=> true)
+            }} className="iwtap-3" to={"/pre-booking/flight?id="+props.id_flight} style={{textDecoration: "none", color: "#fff"}} state={{ps: query.get("ps") || props.ps, dt: query.get("dt") || props.dt, origin: props[0]?.location_airport || props.origin, destination: props[1]?.location_airport || props.destination, sc: query.get("sc") || props.sc}}>
+                <div>
+                    Chọn
+                </div>
+            </Link>
+        }
         {
             loading=== true &&
             <Loading setLoading={setLoading} /> 
