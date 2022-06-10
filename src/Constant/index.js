@@ -1,0 +1,1 @@
+export const id_admin= "j2Q2BT9wv5MAN1FSOBmJGU69FLY2"

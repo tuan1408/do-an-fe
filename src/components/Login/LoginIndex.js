@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { id_admin } from '../../Constant'
 import { loginfacebook } from '../firebase/facebook'
 import { keeplogin, logingoogle, signout } from '../firebase/google'
 
@@ -55,7 +56,7 @@ const LoginIndex = (props) => {
                         </div>
                     }
                     {
-                        props?.uid=== "20KOBh5OMwZfIYQUggr625feyR53" &&
+                        props?.uid=== id_admin &&
                         <div style={{width: "100%", display: "flex",justifyContent: 'center', alignItems: "center", marginTop: 7}}>
                             <Link to="/admin/manage" state={{uid: props?.uid}} style={{textDecoration: "none"}}>
                                 <div onClick={()=> {

@@ -2,9 +2,11 @@ import React from 'react'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import { Button } from '@mui/material';
+import { Backdrop, Button, CircularProgress, IconButton, Snackbar } from '@mui/material';
 import { useState } from 'react';
 import { add_hotel } from '../../f/add_hotel';
+import { useNavigate } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 
 const AddHotel = (props) => {
   const [hotel, sethotel]= useState(()=> ({
@@ -34,6 +36,9 @@ const AddHotel = (props) => {
     meeting: 0,
     airport_shuttle: 0,
   }))
+  const [loading, setloading]= useState(()=> false)
+  const [opensnack, setopensnack]= useState(()=> false)
+  const navigate= useNavigate()
   return (
     <div className="gegfdsesgfdes" style={{flex: "1 1 0", height: "100%", overflowY: "auto", padding: 10, boxSizing: 'border-box', }}>
         <Box
@@ -255,8 +260,33 @@ const AddHotel = (props) => {
     
         
         <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Button onClick={()=> add_hotel(hotel)} variant={"outlined"}>Thêm khách sạn</Button>
+            <Button onClick={()=> add_hotel(hotel, setloading, setopensnack, navigate)} variant={"outlined"}>Thêm khách sạn</Button>
         </div>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        >
+          <>
+              <span style={{fontSize: 24, fontWeight: 600, color: "#e4e6eb"}}>Adding&nbsp;&nbsp;</span>
+              <CircularProgress color="inherit" />
+          </>
+        </Backdrop>
+        <Snackbar
+          open={opensnack}
+          autoHideDuration={3000}
+          message="The flight was added sucessfully"
+          action={
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+            >
+              <div onClick={()=> setopensnack(()=> false)} style={{display: "flex", justifyContent: 'center',alignItems: "center"}}>
+                <CloseIcon fontSize="small" />
+              </div>
+            </IconButton>
+          }
+        />
     </div>
   )
 }

@@ -40,7 +40,7 @@ const BookTicketPlane = (props) => {
 
 export const ChooseTimeAndPlace= (props)=> {
     return (
-        <div className="su-1">
+        <div className={"su-1 "+props.className || ""}>
             <Mode category={"Một chiều / Khứ hồi"} />
             <ChooseOriginAndDestination
             origin={props.origin} 

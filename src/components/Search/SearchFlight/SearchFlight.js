@@ -19,11 +19,11 @@ const SearchFlight = () => {
   const [listRange, setListRange]= useState(()=> [])
   const [loading, setloading]= useState(()=> false)
   useEffect(()=> {
-    search_flight_(setsearchflight, setresultsearch, query.get("ap"), query.get("dt"), query.get("ps"), query.get("sc"), setloading)
+    search_flight_(setsearchflight, setresultsearch, query.get("ap"), query.get("dt"), query.get("ps"), query.get("sc"),query.get("roundtrip"), setloading)
   }, [query])
   return (
     <div className="aoe-1">
-      <TitleSearchFlight searchflight={searchflight} /> 
+      <TitleSearchFlight searchflight={searchflight}  /> 
       <FilterTool setListRange={setListRange} resultsearch={resultsearch} setresultsearch={setresultsearch} settimeorigin={settimeorigin} settimedestination={settimedestination} setfindbybrand={setfindbybrand} findbybrand={findbybrand} />
       {
         loading=== true ? 
@@ -53,6 +53,9 @@ const SearchFlight = () => {
           }
         </>
       }     
+      {
+        loading=== false && resultsearch?.length <= 0 && <div style={{fontSize: 18, fontWeight: 600}}>Không tìm thấy chuyến bay phù hợp. Vui lòng tìm kiếm chuyến bay khác</div>
+      }
     </div>
   )
 }

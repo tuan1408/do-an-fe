@@ -2,17 +2,20 @@ import React from 'react'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import { Button, FormControl, InputLabel } from '@mui/material';
+import { Backdrop, Button, CircularProgress, FormControl, IconButton, InputLabel, Snackbar } from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { add_flight } from '../../f/add_flight';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 
 const AddFlight = (props) => {
   const [flight, setflight]= useState(()=> ({
     origin: "",
     destination: "",
     brand: "",
+    logo_brand: "",
     timestart: "",
     timearrive: "",
     daystart: "",
@@ -30,6 +33,9 @@ const AddFlight = (props) => {
     wifi: 0,
     charger: 0
   }))
+  const [loading, setloading]= useState(()=> false)
+  const [opensnack, setopensnack]= useState(()=> false)
+  const navigate= useNavigate()
   return (
     <div className="gegfdsesgfdes" style={{flex: "1 1 0", height: "100%", overflowY: "auto", padding: 10, boxSizing: 'border-box', }}>
         <Box
@@ -70,6 +76,16 @@ const AddFlight = (props) => {
             noValidate
             autoComplete="off"
             >
+            <TextField onChange={(e)=> setflight(prev=> ({...prev, logo_brand: e.target.value}))} id="outlined-basic" label="Logo hãng hàng không (Url ảnh của hãng)" variant="outlined" />
+        </Box>
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 1, width: '50ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            >
             <TextField onChange={(e)=> setflight(prev=> ({...prev, timestart: e.target.value}))} id="outlined-basic" label="Giờ khởi hành (Ví dụ: 01:20. Nhập theo định dạng hh:mm)" variant="outlined" />
         </Box>
         <Box
@@ -80,7 +96,7 @@ const AddFlight = (props) => {
             noValidate
             autoComplete="off"
             >
-            <TextField onChange={(e)=> setflight(prev=> ({...prev, timedestination: e.target.value}))} id="outlined-basic" label="Giờ đến nơi (Ví dụ: 05:30. Nhập theo định dạng hh:mm)" variant="outlined" />
+            <TextField onChange={(e)=> setflight(prev=> ({...prev, timearrive: e.target.value}))} id="outlined-basic" label="Giờ đến nơi (Ví dụ: 05:30. Nhập theo định dạng hh:mm)" variant="outlined" />
         </Box>
         <Box
             component="form"
@@ -228,8 +244,33 @@ const AddFlight = (props) => {
             <span>Cáp sạc</span>
         </>
         <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <Button onClick={()=> add_flight(flight)} variant={"outlined"}>Thêm chuyến bay</Button>
+            <Button onClick={()=> add_flight(flight, setloading, setopensnack, navigate)} variant={"outlined"}>Thêm chuyến bay</Button>
         </div>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        >
+          <>
+              <span style={{fontSize: 24, fontWeight: 600, color: "#e4e6eb"}}>Adding&nbsp;&nbsp;</span>
+              <CircularProgress color="inherit" />
+          </>
+        </Backdrop>
+        <Snackbar
+          open={opensnack}
+          autoHideDuration={3000}
+          message="The flight was added sucessfully"
+          action={
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+            >
+              <div onClick={()=> setopensnack(()=> false)} style={{display: "flex", justifyContent: 'center',alignItems: "center"}}>
+                <CloseIcon fontSize="small" />
+              </div>
+            </IconButton>
+          }
+        />
     </div>
   )
 }

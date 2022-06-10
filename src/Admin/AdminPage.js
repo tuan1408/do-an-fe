@@ -2,32 +2,37 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import {  Route, Routes } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import { id_admin } from '../Constant'
 import AddFlight from './components/AddFlight'
 import AddHotel from './components/AddHotel'
 import ComponentAdmin from './components/ComponentAdmin'
 import OptionTypeAdmin from './components/OptionTypeAdmin'
+import MenuIcon from '@mui/icons-material/Menu';
+import NotFound404 from '../NotFound/NotFoundPage'
 
 const AdminPage = (props) => {
   const location= useLocation()
   const [change, setchange]= useState(()=> false)
+  const [collapse, setcollapse ]= useState(()=> false)
   if(!location?.state?.uid) return (
-    <div>Not found 404</div>
+    <NotFound404 />
   )
-  else if(location.state.uid !== "20KOBh5OMwZfIYQUggr625feyR53") return <div>Access denied</div>
+  else if(location.state.uid !== id_admin) return <div>Access denied</div>
   else return (
     <div style={{width: "100%", }}>
       <div style={{width: "100%", display: "flex", gap: 30, height: 60, alignItems: "center", padding: "0 50px", boxSizing: "border-box"}}>
-        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/admin/manage/flight" state={{uid: "20KOBh5OMwZfIYQUggr625feyR53"}} style={{fontSize: 20, fontWeight: 600, textDecoration: "none", color: "#000"}}>
+        <MenuIcon onClick={()=> setcollapse(prev=> !prev)} className="gegdesfdgds" style={{cursor: "pointer"}} />
+        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/admin/manage/flight" state={{uid: id_admin}} style={{fontSize: 20, fontWeight: 600, textDecoration: "none", color: "#000"}}>
           Chuyến bay
         </NavLink>
-        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/admin/manage/hotel" state={{uid: "20KOBh5OMwZfIYQUggr625feyR53"}} style={{fontSize: 20, fontWeight: 600, textDecoration: "none", color: "#000"}}>
+        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/admin/manage/hotel" state={{uid: id_admin}} style={{fontSize: 20, fontWeight: 600, textDecoration: "none", color: "#000"}}>
           Khách sạn
         </NavLink>
       </div>
       <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: 'center', height: "calc(100vh - 120px)"}}>
         <Routes>
           {
-            ["flight", "hotel"].map((item, key)=> <Route key={key} path={"/"+item+"/*"} element={<OptionTypeAdmin type={item} />}></Route>)
+            ["flight", "hotel"].map((item, key)=> <Route key={key} path={"/"+item+"/*"} element={<OptionTypeAdmin collapse={collapse} type={item} />}></Route>)
           }
         </Routes>
 

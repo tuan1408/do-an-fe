@@ -1,6 +1,10 @@
 import axios from "axios"
+import { fake_sleep } from "./fake_sleep"
+import _ from "lodash"
 
-export const search_combo= async (origin, destination, dt, cs, sc, location, timein, guest, room, back, setdata, setchunklist)=> {
+export const search_combo= async (origin, destination, dt, cs, sc, location, timein, guest, room, back, setdata, setchunklist, setloading)=> {
+    setloading(()=> true)
+    await fake_sleep(1000)
     const res= await axios({
         url: "http://localhost:4000/v2/api/result/search/combo",
         method: "post",
@@ -23,7 +27,8 @@ export const search_combo= async (origin, destination, dt, cs, sc, location, tim
             }   
         }
     })
+    setloading(()=> false)
     const result= await res.data
-    setchunklist(()=> result?.slice(0, 7))
-    return setdata(()=> result)
+    setchunklist(()=> _.uniq(result, "name_hotel")?.slice(0, 7))
+    return setdata(()=> _.uniq(result, "name_hotel"))
 }

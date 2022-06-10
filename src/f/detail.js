@@ -1,10 +1,11 @@
 import axios from "axios"
 
 export const detail= async (id, setdata)=> {
+    console.log(id)
     const res= await axios({
         url: "http://localhost:4000/detail",
         method: "post",
-        body: {
+        data: {
             id: id,
         }
     })

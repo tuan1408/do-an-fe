@@ -60,14 +60,15 @@ const ResultSearchHotel = (props) => {
                                         props.xxxx !== true &&
                                         <>  
                                         {
-                                            props.ooo1=== true ?
-                                            <Link to={"/bookig/v2/"+props.id_hotel} style={{textDecoration: "none", userSelect: "none"}} state={{time: location.state.time, count_customer: location.state.count_customer, room: location.state.room, detail_customer: location.state.detail_customer, time_night: location.state.time_night}} onClick={()=> scroll.scrollToTop()}>
+                                            props.ooo=== true ?
+                                            <Link to={"/booking/v2/"+props.id_hotel} style={{textDecoration: "none", userSelect: "none"}} state={{time: location.state.time, count_customer: location.state.count_customer, room: location.state.room, detail_customer: props.detail_customer, time_night: location.state.time_night, id_hotel: props.id_hotel, }} 
+                                            onClick={()=> scroll.scrollToTop()}>
                                                 <div style={{padding: "8px 16px", color: "#fff", background: "#2e89ff", fontWeight: 600, width: "max-content", boxSizing: "border-box", borderRadius: 8, float: "right", cursor: "pointer"}} className="dsowe_2">
-                                                    Chọn    
+                                                    Chọn 
                                                 </div>
                                             </Link>
                                             :
-                                            <Link to={"/booking/v2/"+props.id_hotel} style={{textDecoration: "none", userSelect: "none"}} state={{time: query.get("spec"), count_customer: query.get("c"), room: query.get("r"), detail_customer: query.get("g"), time_night: query.get("tn")}}>
+                                            <Link to={"/booking/v2/"+props.id_hotel} style={{textDecoration: "none", userSelect: "none"}} state={{time: query.get("spec"), count_customer: query.get("c"), room: query.get("r"), detail_customer: query.get("g"), time_night: query.get("tn"), id_hotel: props.id_hotel}}>
                                                 <div style={{padding: "8px 16px", color: "#fff", background: "#2e89ff", fontWeight: 600, width: "max-content", boxSizing: "border-box", borderRadius: 8, float: "right", cursor: "pointer"}} className="dsowe_2">
                                                     Chọn    
                                                 </div>

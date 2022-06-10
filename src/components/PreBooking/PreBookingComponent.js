@@ -1,7 +1,9 @@
+import { CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import { fake_sleep } from '../../f/fake_sleep'
 import useQuery from '../../f/get_query_parameter'
 import { pre_booking } from '../../f/pre_booking'
 import Suggest from '../../Suggest/Suggest'
@@ -17,9 +19,15 @@ const PreBookingComponent = (props) => {
   const location= useLocation()
   const { id }= useParams()
   const query= useQuery()   
+  const [loading, setloading]= useState(()=> false)
   useEffect(()=> {
     pre_booking(query.get("id"), setdata, id)
   }, [query, id])
+  const fakeloading= async ()=> {
+    setloading(()=> true)
+    await fake_sleep(1500)
+    setloading(()=> false)
+  }
   return (
     <div className='dsodkaw-11' style={{width: "100%", display: "flex", justifyContent: "center",  flexDirection: "column", alignItems: "center", marginTop: 80, background: "#f2f3f3"}}>
         {
@@ -120,8 +128,8 @@ const PreBookingComponent = (props) => {
                     </div>
                 </div>
                 <div style={{width: "100%", maxWidth: 1024, display:"flex", flexDirection: "row-reverse", marginTop: 20}}>
-                    <Link to={"/booking/v2/"+ query.get("id")} style={{textDecoration: "none"}} state={{...props, ...data, ...location.state}}>
-                        <div className='dsplplpwlpawlwpaw' style={{padding: "8px 16px", fontWeight: 600, color: "#fff", background: "#f96d01", width: 320, boxSizing: "border-box", borderRadius: 10, height: 50, display: 'flex',justifyContent: "center", alignItems: "center"}}>Tiếp tục</div>
+                    <Link to={setTimeout(()=> "/booking/v2/"+ query.get("id"), 2000)} style={{textDecoration: "none"}} state={{...props, ...data, ...location.state}}>
+                        <div className='dsplplpwlpawlwpaw' style={{padding: "8px 16px", fontWeight: 600, color: "#fff", background: "#f96d01", width: 320, boxSizing: "border-box", borderRadius: 10, height: 50, display: 'flex',justifyContent: "center", alignItems: "center"}}>{loading=== false ? "Tiếp tục" : <CircularProgress color="secondary" />}</div>
                     </Link>
                 </div>
                 <Suggest hotel={true} title={"Được đề xuất cho bạn"} {...props} {...data} />

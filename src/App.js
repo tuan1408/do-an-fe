@@ -12,6 +12,8 @@ import { lazy, Suspense } from "react"
 import { CircularProgress } from "@mui/material"
 import Container from "./components/Container/Container"
 import AdminPage from "./Admin/AdminPage"
+import { id_admin } from "./Constant"
+import NotFound404 from "./NotFound/NotFoundPage"
 
 const PreBookingComponent = lazy(() => {
   return new Promise(resolve => {
@@ -66,6 +68,7 @@ const App=(props)=> {
         </div>
       </div>
       <Routes>
+        <Route path="/" element={<Navigate to="/booking?q=flight" />}></Route>
         <Route path="/booking" element={<Container bookplane={bookplane} setbookplane={setbookplane} />}></Route>
         <Route path="/flight/fullsearch" element={<SearchFlight />}></Route>
         <Route path="/hotel/search" element={<SearchHotel />}></Route>
@@ -73,9 +76,10 @@ const App=(props)=> {
         <Route path="/pre-booking/:id" element={<Suspense fallback={<Loading/>}><PreBookingComponent /></Suspense>}></Route>
         <Route path="/booking/v2/:id" element={<Booking />}></Route>
         <Route path="/admin/manage/*" element={<AdminPage />}></Route>
-        <Route path="/admin/manage/" element={<Navigate to="/admin/manage/flight" state={{uid: "20KOBh5OMwZfIYQUggr625feyR53"}} />}></Route>
-        <Route path="/admin/manage/flight" element={<Navigate state={{uid: "20KOBh5OMwZfIYQUggr625feyR53"}} to={"/admin/manage/flight/all_flight"} />}></Route>
-        <Route path="/admin/manage/hotel" element={<Navigate state={{uid: "20KOBh5OMwZfIYQUggr625feyR53"}} to={"/admin/manage/hotel/all_hotel"} />}></Route>
+        <Route path="/admin/manage/" element={<Navigate to="/admin/manage/flight" state={{uid: id_admin}} />}></Route>
+        <Route path="/admin/manage/flight" element={<Navigate state={{uid: id_admin}} to={"/admin/manage/flight/all_flight"} />}></Route>
+        <Route path="/admin/manage/hotel" element={<Navigate state={{uid: id_admin}} to={"/admin/manage/hotel/all_hotel"} />}></Route>
+        <Route path="*" element={<NotFound404 />}></Route>
       </Routes>
     </Router>
     </>

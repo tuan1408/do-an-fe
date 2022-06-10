@@ -13,6 +13,7 @@ import SortHotel from '../../Sort/SortHotel/SortHotel'
 import _ from "lodash"
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { CircularProgress } from '@mui/material'
 
 const SearchCombo = () => {
   const [listRange, setListRange]= useState(()=> [])
@@ -32,6 +33,7 @@ const SearchCombo = () => {
   const [paginateList, setPaginateList]= useState(()=> [])
   const query= useQuery()
   const [page, setPage] = useState(()=> 1);
+  const [loading, setloading]= useState(()=> false)
   const handleChange = (event, value) => {
     setPage(value);
     if(listRange?.length>0) {
@@ -53,7 +55,7 @@ const SearchCombo = () => {
     setPaginateList(list?.slice(8 * parseInt(page), 8 * (parseInt(page)+ 1)))
   };
   useEffect(()=> {
-    search_combo(query.get("origin"), query.get("destination"), query.get("dt"), query.get("cs"), query.get("sc"), query.get("location"), query.get("timein"), query.get("guest"), query.get("room"), query.get("back"), setlist, setPaginateList)
+    search_combo(query.get("origin"), query.get("destination"), query.get("dt"), query.get("cs"), query.get("sc"), query.get("location"), query.get("timein"), query.get("guest"), query.get("room"), query.get("back"), setlist, setPaginateList, setloading)
   }, [query])
   return (
     <div className='aoe-1'>
@@ -78,10 +80,17 @@ const SearchCombo = () => {
             </div>
             <div className="rijererwrwe">
               {
-                paginateList?.map((item, key)=> <ResultSearchHotel ooo={true} key={key} {...item} />)
+                loading=== true  &&
+                <div style={{width: "100%", height: 100, display: "flex", justifyContent: "center", alignItems: 'center', gap: 5, zIndex: 99999999}}>
+                  <span style={{fontSize: 24, fontWeight: 600, color: "#3a3b3c"}}>Searching...</span>
+                  <CircularProgress />
+                </div> 
               }
               {
-                list?.length<=0 && <div>Không tìm thấy thứ bạn cần</div>
+                loading=== false && paginateList?.length> 0 && paginateList?.map((item, key)=> <ResultSearchHotel detail_customer={query.get("guest")} ooo={true} key={key} {...item}  />)
+              }
+              {
+                loading=== false && list?.length<=0 && <div>Không tìm thấy thứ bạn cần</div>
               }
               <Stack spacing={2}>
                 <Pagination color="primary" count={Math.ceil(list?.length / 8)} page={page} onChange={handleChange} />

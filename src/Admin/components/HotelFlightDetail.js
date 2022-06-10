@@ -3,10 +3,14 @@ import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { delete_ } from '../../f/delete'
 import { detail } from '../../f/detail'
+import { Backdrop, CircularProgress, IconButton, Snackbar } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
 
 const HotelFlightDetail = (props) => {
     const location= useLocation()
     const [data, setdata]= useState(()=> 0)
+    const [loading, setloading]= useState(()=> false)
+    const [opensnack, setopensnack]= useState(()=> false)
     return (
       <>
           <div style={{fontSize: 16, display: "flex", flexDirection: "row-reverse", alignItems: "center", justifyContent: 'space-between', width: "100%"}}>
@@ -55,12 +59,37 @@ const HotelFlightDetail = (props) => {
                   <span style={{fontSize: 18, fontWeight: 600}}>VND {props.cost_baby}/ng</span>
               </div>
           </div>
-          <div onClick={()=> {delete_(props.id_hotel, location.pathname.split("/")[3])
+          <div onClick={()=> {delete_(props.x_id, location.pathname.split("/")[3], setloading, setopensnack)
               props.setchange(prev=> !prev)
-              props.setdata(props.data?.filter(item=> item.id_flight.toString() !== props.x_id.toString()))
+              props.setdata(props.data?.filter(item=> item.id_hotel.toString() !== props.x_id.toString()))
           }} style={{width: "100%", fontSize: 17, fontWeight: 600, color: "#ff0000", cursor: "pointer"}}>
               Xóa
           </div>
+          <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        >
+          <>
+              <span style={{fontSize: 24, fontWeight: 600, color: "#e4e6eb"}}>Deleting&nbsp;&nbsp;</span>
+              <CircularProgress color="inherit" />
+          </>
+        </Backdrop>
+        <Snackbar
+          open={opensnack}
+          autoHideDuration={3000}
+          message="The flight was deleted sucessfully"
+          action={
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+            >
+              <div onClick={()=> setopensnack(()=> false)} style={{display: "flex", justifyContent: 'center',alignItems: "center"}}>
+                <CloseIcon fontSize="small" />
+              </div>
+            </IconButton>
+          }
+        />
       </>
     )
 }
