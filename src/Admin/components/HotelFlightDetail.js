@@ -5,12 +5,16 @@ import { delete_ } from '../../f/delete'
 import { detail } from '../../f/detail'
 import { Backdrop, CircularProgress, IconButton, Snackbar } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
+import { get_customer_book } from '../../f/get_customer_book'
 
 const HotelFlightDetail = (props) => {
     const location= useLocation()
     const [data, setdata]= useState(()=> 0)
     const [loading, setloading]= useState(()=> false)
     const [opensnack, setopensnack]= useState(()=> false)
+    const [detail_, setdetail_]= useState(()=> false)
+    const [datacustomer, setdatacustomer]= useState(()=> [])
+
     return (
       <>
           <div style={{fontSize: 16, display: "flex", flexDirection: "row-reverse", alignItems: "center", justifyContent: 'space-between', width: "100%"}}>
@@ -24,8 +28,8 @@ const HotelFlightDetail = (props) => {
                       props.setdetail(prev=> 0)
                   }
                   else {
-                      detail(props.id_hotel, setdata)
-                      props.setdetail(prev=> props.data_id)
+                    detail(props.id_hotel, setdata)
+                    props.setdetail(prev=> props.data_id)
                   }
               }} style={{fontSize: 17, fontWeight: 600, color: "#2e89ff", cursor: "pointer"}}>Chi tiết</div>
           </div>
@@ -33,7 +37,43 @@ const HotelFlightDetail = (props) => {
           <div style={{width: "100%", height: props.detail.toString() === props.data_id.toString() ? "auto" : 0, transition: "all 0.2s linear", background: "#fff", marginTop: 8, borderRadius: 10, overflow: "hidden", boxSizing: "border-box", padding: props.detail.toString() === props.data_id.toString() ? 10 : 0}}>
               <div>Thông tin khách sạn</div>
               <br />
-              <div style={{fontSize: 18, fontWeight: 600}}>Số hành khách đã đặt vé khách sạn: {data}</div>
+              <div style={{fontSize: 18, fontWeight: 600}}>Số hành khách đã đặt vé khách sạn: {data}&nbsp;&nbsp;&nbsp;&nbsp; {<span onClick={()=> {
+              setdetail_(prev=> !prev)
+              if(detail_=== false) {
+                get_customer_book(props.id_hotel, setdatacustomer)
+              }
+            }} style={{color: "#2e89ff", cursor: "pointer"}}>{detail_=== true ? "Thu gọn" : "Chi tiết"}</span>}</div>
+            {
+              detail_=== true &&
+              <>
+                {
+                  datacustomer && datacustomer?.map((item, key)=> 
+                  <React.Fragment key={key}>
+                    {
+                      item?.type_user.toString()=== "agent" &&
+                      <div>
+                        <div>Kiểu khách hàng: <strong>{item?.type_user}</strong></div>
+                        <div>Họ tên đầy đủ: <strong>{item?.name} {item?.surname}</strong></div>
+                        <div>Email: <strong>{item?.email}</strong></div>
+                        <div>Đã đặt chuyến bay lúc: <strong>{item?.time_book}</strong></div>
+                      </div>
+                    }
+                    <br />
+                    {
+                        item?.type_user.toString()=== "customer" &&
+                        <div>
+                            <div>Kiểu khách hàng: <strong>{item?.type_user}</strong></div>
+                            <div>Họ tên đầy đủ: <strong>{item?.name} {item?.surname}</strong></div>
+                            <div>Ngày tháng năm sinh: <strong>{item?.date_birth}/{item?.month_birth}/{item?.year_birth}</strong></div>
+                            <div>Quốc tịch: <strong>{item?.nationality}</strong></div>
+                            <div>Email: <strong>{item?.email || "_"}</strong></div>
+                            <div>Đã đặt chuyến bay lúc: <strong>{item?.time_book}</strong></div>
+                        </div>
+                    }
+                    </React.Fragment>)
+                    }
+                </>
+                }
               <br />
               <div>
                   Tên khách sạn:&nbsp;
@@ -77,7 +117,7 @@ const HotelFlightDetail = (props) => {
         <Snackbar
           open={opensnack}
           autoHideDuration={3000}
-          message="The flight was deleted sucessfully"
+          message="The hotel was deleted sucessfully"
           action={
             <IconButton
               size="small"

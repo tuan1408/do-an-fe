@@ -58,7 +58,7 @@ const App=(props)=> {
           </div>
         </div>
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 10}}>
-          <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/whatsapp/326/flag-vietnam_1f1fb-1f1f3.png" alt="" style={{width: 30, height: 30}} />
+          <img referrerPolicy='no-referrer' src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/whatsapp/326/flag-vietnam_1f1fb-1f1f3.png" alt="" style={{width: 30, height: 30}} />
           <br />
           <LoginIndex uid={uid} setuid={setuid} />
           {

@@ -48,7 +48,7 @@ const TimeFlightDetail = (props) => {
               <>
                 {
                   datacustomer && datacustomer?.map((item, key)=> 
-                  <>
+                  <React.Fragment key={key}>
                     {
                       item?.type_user.toString()=== "agent" &&
                       <div>
@@ -60,7 +60,7 @@ const TimeFlightDetail = (props) => {
                     }
                     <br />
                       {
-                      item?.type_user.toString()== "customer" &&
+                      item?.type_user.toString()=== "customer" &&
                       <div>
                         <div>Kiểu khách hàng: <strong>{item?.type_user}</strong></div>
                         <div>Họ tên đầy đủ: <strong>{item?.name} {item?.surname}</strong></div>
@@ -70,7 +70,7 @@ const TimeFlightDetail = (props) => {
                         <div>Đã đặt chuyến bay lúc: <strong>{item?.time_book}</strong></div>
                       </div>
                 }
-                  </>)
+                  </React.Fragment>)
                 }
               </>
             }

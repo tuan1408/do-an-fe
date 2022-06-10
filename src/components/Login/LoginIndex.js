@@ -30,10 +30,10 @@ const LoginIndex = (props) => {
       return (
         <div style={{display: "flex", justifyContent: "center", position: "relative", alignItems: "center", gap: 10, cursor: "pointer"}}>
             <div style={{userSelect: "none", display: "flex", justifyContent: 'center',alignItems: "center", gap: 10}} onClick={()=> setopen(prev=> !prev)}>
-                <img src={user.photo} alt="open" style={{width: 36, height: 36, objectFit: "cover", borderRadius: "50%"}} />
+                <img referrerPolicy='no-referrer' src={user.photo} alt="open" style={{width: 36, height: 36, objectFit: "cover", borderRadius: "50%"}} />
                 {user.name}
             </div>
-            <div>
+            <div>   
                 <img importance="low" loading="lazy" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/3/393c6a1dee81cd3dc84df59672d43edb.svg" decoding="async" width="12" height="12" className='dewq-2' alt="open" />
             </div>
             {
@@ -116,7 +116,7 @@ const LoginIndex = (props) => {
         </div>
         <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: 'flex-start', gap: 5, marginTop: 10}}>
             <div onClick={()=> loginfacebook()} style={{padding: 10, backgroundColor: "#3b5998", flex: "1 1 0", borderRadius: 6, textAlign: "center", color: "#fff", fontWeight: 600, display: "flex", justifyContent: "center", alignItems: 'center',gap: 7, cursor: "pointer"}}>
-            <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/5/5f2c27c2674ad4a01c1cd42b2e0884aa.svg" width="16" height="16" alt="open" />
+            <img referrerPolicy='no-referrer' src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/5/5f2c27c2674ad4a01c1cd42b2e0884aa.svg" width="16" height="16" alt="open" />
             <div>
                 Facebook
             </div>

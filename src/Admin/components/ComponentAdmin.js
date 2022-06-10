@@ -45,13 +45,13 @@ const ComponentAdmin= (props)=> {
                     {
                       location?.pathname.split("/")[4]=== "prepare_flight" && 
                       <div style={{fontSize: 16, display: "flex", flexDirection: "column", alignItems: "end"}}>
-                        <span style={{}}>Chuẩn bị khởi hành vào lúc : <span style={{color: "green"}}>{moment(parseInt(item.c_timeflight)).format("hh:mm DD MMM YYYY")}</span></span>
+                        <span style={{}}>Chuẩn bị khởi hành vào lúc : <span style={{color: "green"}}>{moment(parseInt(item.c_timeflight)).format("HH:mm DD MMM YYYY")}</span></span>
                       </div>
                     }    
                     {
                       location?.pathname.split("/")[4]=== "new_flight" && 
                       <div style={{fontSize: 16, display: "flex", flexDirection: "column", alignItems: "end"}}>
-                        <span style={{}}>Đã được thêm vào lúc : <span style={{color: "green"}}>{moment(parseInt(item.timedetail)).format("hh:mm DD MMM YYYY")}</span></span>
+                        <span style={{}}>Đã được thêm vào lúc : <span style={{color: "green"}}>{moment(parseInt(item.timedetail)).format("HH:mm DD MMM YYYY")}</span></span>
                       </div>
                     }                  
                     </div>
@@ -95,13 +95,13 @@ const ComponentAdmin= (props)=> {
                   {
                     location?.pathname.split("/")[4]=== "available_hotel" && 
                     <div style={{fontSize: 16, display: "flex", flexDirection: "column", alignItems: "end", width: "100%"}}>
-                      <span style={{width: "100%"}}>Có sẵn từ : <span style={{color: "green"}}>{moment(parseInt(item.available_from)).format("hh:mm DD MMM YYYY")}</span></span>
+                      <span style={{width: "100%"}}>Có sẵn từ : <span style={{color: "green"}}>{moment(parseInt(item.available_from)).format("HH:mm DD MMM YYYY")}</span></span>
                     </div>
                   }
                   {
                     location?.pathname.split("/")[4]=== "new_hotel" && 
                     <div style={{fontSize: 16, display: "flex", flexDirection: "column", alignItems: "end", width: "100%"}}>
-                      <span style={{width: "100%"}}>Đã được thêm vào : <span style={{color: "green"}}>{moment(parseInt(item.timedetail)).format("hh:mm DD MMM YYYY")}</span></span>
+                      <span style={{width: "100%"}}>Đã được thêm vào : <span style={{color: "green"}}>{moment(parseInt(item.timedetail)).format("HH:mm DD MMM YYYY")}</span></span>
                     </div>
                   }                  
                   </div>
