@@ -11,13 +11,13 @@ provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyC7rChq0KnDRq_iOZzXo5g_Dj50NxIdLjc",
-  authDomain: "ticket-7e8e8.firebaseapp.com",
-  projectId: "ticket-7e8e8",
-  storageBucket: "ticket-7e8e8.appspot.com",
-  messagingSenderId: "419861830640",
-  appId: "1:419861830640:web:688f65f31a949412ecdb35",
-  measurementId: "G-FZ9SMFGB7Y"
+  apiKey: "AIzaSyB59MDmNpHcNJQ5VS-tpBI4tVEE-0fwpkc",
+  authDomain: "ticket-51aa0.firebaseapp.com",
+  projectId: "ticket-51aa0",
+  storageBucket: "ticket-51aa0.appspot.com",
+  messagingSenderId: "243356008530",
+  appId: "1:243356008530:web:243862882e0171fe52df8b",
+  measurementId: "G-13DV25C6NJ"
 };
 
 // Initialize Firebase
