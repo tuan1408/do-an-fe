@@ -4,7 +4,7 @@ import SearchFlight from "./components/Search/SearchFlight/SearchFlight"
 import SearchHotel from "./components/Search/SearchHotel/SearchHotel"
 import SearchCombo from "./components/ComboHotelFlight/SearchCombo/SearchCombo"
 import LoginIndex from "./components/Login/LoginIndex"
-import { memo, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import SignupIndex from "./components/Signup/SignupIndex"
 import { Link, Navigate } from "react-router-dom"
 import Booking from "./Booking/Booking"
@@ -14,6 +14,8 @@ import Container from "./components/Container/Container"
 import AdminPage from "./Admin/AdminPage"
 import { id_admin } from "./Constant"
 import NotFound404 from "./NotFound/NotFoundPage"
+import axios from "axios"
+import Cookie from "js-cookie"
 
 const PreBookingComponent = lazy(() => {
   return new Promise(resolve => {
@@ -36,6 +38,21 @@ export const locale= {
 const App=(props)=> {
   const [uid, setuid]= useState(()=> "")
   const [bookplane, setbookplane]= useState(()=> true)
+  useEffect(()=> {
+    (async()=> {
+      const res= await axios({
+        url: "http://localhost:4000/auto",
+        method: 'post',
+        data: {
+          id: Cookie.get("id")
+        },
+
+      })
+      const result= await res.data
+      setuserlogin(()=> result[0])
+    })()
+  }, [])
+  const [userlogin, setuserlogin]= useState(()=> [])
   return (
     <>
     <Router>
@@ -60,7 +77,7 @@ const App=(props)=> {
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 10}}>
           <img referrerPolicy='no-referrer' src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/whatsapp/326/flag-vietnam_1f1fb-1f1f3.png" alt="" style={{width: 30, height: 30}} />
           <br />
-          <LoginIndex uid={uid} setuid={setuid} />
+          <LoginIndex userlogin={userlogin} uid={uid} setuid={setuid} />
           {
             uid?.length<=0 &&
             <SignupIndex />

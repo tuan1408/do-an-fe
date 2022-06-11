@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { signup } from '../../f/signup'
 import { loginfacebook } from '../firebase/facebook'
 import { logingoogle } from '../firebase/google'
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const SignupIndex = (props) => {
     const [open, setopen]= useState(()=> false)
@@ -21,6 +25,21 @@ const SignupIndex = (props) => {
         firstname: "",
         lastname: "",
     }))
+    const [opensnackbar, setopensnackbar]= useState(()=> false)
+    const action = (
+        <React.Fragment>
+          <Button color="secondary" size="small" onClick={()=> setopensnackbar(()=> false)}>
+            UNDO
+          </Button>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={()=> setopensnackbar(()=> false)}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </React.Fragment>)
   return (
     <div style={{display: "flex",marginLeft: 20, justifyContent: "center", alignItems: "center", cursor: "pointer", borderRadius: 6, backgroundColor: "#2e89ff", color: "#fff", fontWeight: 600, userSelect: "none"}}>
         <div style={{ padding: 10, userSelect: "none"}} onClick={()=> setopen(prev=> !prev)}>Đăng ký</div>
@@ -59,7 +78,7 @@ const SignupIndex = (props) => {
                 <input onChange={(e)=> setdata(prev=> ({...prev, password: e.target.value}))} type="password" style={{width: "100%", padding: 10, boxSizing: "border-box", borderRadius: 6}} />
                 <div style={{width: "100%", display: "flex", justifyContent: "flex-start", alignItems: 'flex-start', gap: 10, marginTop: 10}}>
                     <div onClick={async ()=> {
-                        await signup(data)
+                        await signup(data, setopensnackbar)
                         setopen(()=> false)
                     }} style={{padding: 10, color: "#fff", backgroundColor: "#ff5e1f", fontWeight: 600, borderRadius: 6, whiteSpace: "nowrap"}}>
                     Đăng ký
@@ -89,6 +108,13 @@ const SignupIndex = (props) => {
             </div>
             </div>
         }
+        <Snackbar
+            open={opensnackbar}
+            autoHideDuration={6000}
+            onClose={()=> setopensnackbar(()=> false)}
+            message="Signup is successfully"
+            action={action}
+        />
     </div>
   )
 }

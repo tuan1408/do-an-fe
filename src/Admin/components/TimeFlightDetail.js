@@ -19,8 +19,8 @@ const TimeFlightDetail = (props) => {
     <>
         <div style={{fontSize: 16, display: "flex", flexDirection: "row-reverse", alignItems: "center", justifyContent: 'space-between', width: "100%"}}>
         <div style={{display: "flex", flexDirection: "column", }}>
-            <span style={{}}>Ngày bắt đầu : <span style={{color: "green"}}>{moment(parseInt(props.c_timeflight)).format("DD MMM YYYY")}</span></span>
-            <span style={{}}>Ngày kết thúc : <span style={{color: "green"}}>{moment(parseInt(props.c_timedestination)).format("DD MMM YYYY")}</span></span>
+            <span style={{}}>Ngày bắt đầu : <span style={{color: "green"}}>{moment(props.dayflight, "DD-MM-YYYY").format("DD MMM YYYY")}</span></span>
+            <span style={{}}>Ngày kết thúc : <span style={{color: "green"}}>{moment(props.daydestination, "DD-MM-YYYY").format("DD MMM YYYY")}</span></span>
         </div>
         <div>
             <div onClick={()=> {
