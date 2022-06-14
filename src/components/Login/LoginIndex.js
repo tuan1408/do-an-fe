@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { id_admin } from '../../Constant'
+import { login } from '../../f/login'
+import { logout } from '../../f/logout'
 import { loginfacebook } from '../firebase/facebook'
 import { keeplogin, logingoogle, signout } from '../firebase/google'
 
@@ -26,6 +28,11 @@ const LoginIndex = (props) => {
   useEffect(()=> {
     keeplogin(props.setuid, setuser)
   }, [props.setuid])
+  const [data, setdata]= useState(()=> ({
+    account: "",
+    password: "",
+  }))
+  const [wrong, setwrong]= useState(()=> false)
   if(props.uid?.length> 0) {
       return (
         <div style={{display: "flex", justifyContent: "center", position: "relative", alignItems: "center", gap: 10, cursor: "pointer"}}>
@@ -80,9 +87,58 @@ const LoginIndex = (props) => {
         </div>
       )
   }
+  else if(props?.userlogin?.account?.length> 0) return (
+    <div style={{display: "flex", justifyContent: "center", position: "relative", alignItems: "center", gap: 10, cursor: "pointer"}}>
+            <div style={{userSelect: "none", display: "flex", justifyContent: 'center',alignItems: "center", gap: 10}} onClick={()=> setopen(prev=> !prev)}>
+                {props.userlogin.firstname} {props.userlogin.lastname} 
+            </div>
+            <div>   
+                <img importance="low" loading="lazy" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/3/393c6a1dee81cd3dc84df59672d43edb.svg" decoding="async" width="12" height="12" className='dewq-2' alt="open" />
+            </div>
+            {
+                open=== true &&
+                <div ref={myRef} style={{position: "absolute", width: 300, boxSizing: "border-box", padding: 16, background: "#fff", borderRadius: 6, top: "100%", right: 0, boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop: 10}}> 
+                    <div style={{marginTop: 10}}>
+                        Username: {props.userlogin.firstname} {props.userlogin.lastname} 
+                    </div>
+                    <div style={{marginTop: 5}}>
+                        Email: {props.userlogin.account}
+                    </div>
+                    {
+                        user.phonenumer?.length> 0
+                        &&
+                        <div style={{marginTop: 5}}>
+                            Phonenumber: {user.phonenumer}
+                        </div>
+                    }
+                    {
+                        props?.uid=== id_admin &&
+                        <div style={{width: "100%", display: "flex",justifyContent: 'center', alignItems: "center", marginTop: 7}}>
+                            <Link to="/admin/manage" state={{uid: props?.uid}} style={{textDecoration: "none"}}>
+                                <div onClick={()=> {
+                                    setopen(()=> false)
+                                }} style={{padding: 10, borderRadius: 10, backgroundColor: "#2e89ff", color: "#fff", fontWeight: 600}}>
+                                    Manage app
+                                </div>
+                            </Link>
+                    </div>    
+                    }
+                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: 7}}>
+                        <div onClick={()=> {
+                            signout(props.setuid, setuser)
+                            logout()
+                            setopen(()=> false)
+                        }} style={{padding: 10, borderRadius: 10, backgroundColor: "#f2f0f5", color: "#3a3b3c", fontWeight: 600}}>
+                            Log out
+                        </div>
+                    </div>    
+                </div>
+            }
+        </div>
+  )
   else return (
     <div style={{display: "flex", justifyContent: "center", position: "relative", alignItems: "center", gap: 10, cursor: "pointer"}}>
-    <TriggerLogin setopen={setopen} />
+    <TriggerLogin data={data} setopen={setopen} />
     {/*  */}
     {
         open=== true &&
@@ -90,7 +146,7 @@ const LoginIndex = (props) => {
             <div>Đăng nhập tài khoản</div>
             <br />
             <div style={{marginBottom: 8, fontWeight: 600}}>Email hoặc số điện thoại</div>
-            <input type="text" style={{width: "100%", padding: 10, boxSizing: "border-box", borderRadius: 6,}} />
+            <input onChange={(e)=> setdata(prev=> ({...prev, account: e.target.value}))} type="text" style={{width: "100%", padding: 10, boxSizing: "border-box", borderRadius: 6,}} />
             <br />
             <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: 'center'}}>
                 <div style={{marginBottom: 8, fontWeight: 600}}>
@@ -100,12 +156,22 @@ const LoginIndex = (props) => {
                 Quên mật khẩu
                 </div>
             </div>
-            <input type="password" style={{width: "100%", padding: 10, boxSizing: "border-box", borderRadius: 6}} />
+            <input onChange={(e)=> setdata(prev=> ({...prev, password: e.target.value}))} type="password" style={{width: "100%", padding: 10, boxSizing: "border-box", borderRadius: 6}} />
             <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: 'flex-start', gap: 5, marginTop: 10}}>
-                <div style={{padding: 10, color: "#fff", backgroundColor: "#ff5e1f", fontWeight: 600, borderRadius: 6, whiteSpace: "nowrap"}}>
-                Đăng nhập
+                
+                <div onClick={()=> {
+                    login(data, setwrong)
+                    setopen(prev=> !prev)
+                }} 
+            
+                style={{padding: 10, color: "#fff", backgroundColor: "#ff5e1f", fontWeight: 600, borderRadius: 6, whiteSpace: "nowrap"}}>
+                    Đăng nhập
                 </div>
                 <div>
+                {
+                    wrong=== true &&
+                    <div style={{color: "red"}}>Tài khoản hoặc mật khẩu không chính xác</div>
+                }
                 <div style={{fontSize: 14}}>Bạn chưa có tài khoản ?</div>
                 <div style={{fontSize: 14, fontWeight: 600, color: "#2e89ff"}}>Đăng ký</div>
             </div>
@@ -139,7 +205,9 @@ const TriggerLogin= (props)=> {
             <div style={{width: 24, height: 24, background: "#f2f0f5", display: 'flex', justifyContent: 'center',alignItems: "center", borderRadius: "50%"}}>
             <img importance="low" alt="open" loading="lazy" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/f/f2ccb8732da6068a2f24a40aea2bdcdd.svg" decoding="async" width="14" height="14" className="awo-2" />
             </div>
-            <div onClick={()=> props.setopen(prev=> !prev)}>
+            <div onClick={()=> {
+                props.setopen(prev=> !prev)
+            }}>
                 Đăng nhập
             </div>
             <div>
