@@ -16,6 +16,10 @@ import { id_admin } from "./Constant"
 import NotFound404 from "./NotFound/NotFoundPage"
 import axios from "axios"
 import Cookie from "js-cookie"
+import CachedIcon from '@mui/icons-material/Cached';
+import "./i18n"
+import { useTranslation } from "react-i18next"
+import HomePage from "./components/HomePage/HomePage"
 
 
 const PreBookingComponent = lazy(() => {
@@ -39,6 +43,7 @@ export const locale= {
 const App=(props)=> {
   const [uid, setuid]= useState(()=> "")
   const [bookplane, setbookplane]= useState(()=> true)
+  const { t, i18n }= useTranslation()
   useEffect(()=> {
     (async()=> {
       const res= await axios({
@@ -53,6 +58,7 @@ const App=(props)=> {
       setuserlogin(()=> result[0])
     })()
   }, [])
+  const [lang, setlang]= useState(()=> "VIE")
   const [userlogin, setuserlogin]= useState(()=> [])
   return (
     <>
@@ -60,22 +66,37 @@ const App=(props)=> {
       <div style={{height: 60, width: "100%", background: "#f2f3f3"}}></div>
       <div style={{height: 60, width: "100%", background: "#fff", position: "fixed", left: 0, top: 0, zIndex: 9999, display: "flex", padding: "0 50px", justifyContent: "space-between", backgroundColor: "#fff", alignItems: "center", boxSizing: "border-box"}}>
         <div style={{display: "flex", justifyContent: 'center',alignItems: "center", gap: 50}}>
-          <Link to={"/booking"} style={{textDecoration: "none", color: "#2e89ff", fontSize: 20, fontWeight: 600}}>
+          <Link to={"/"} style={{textDecoration: "none", color: "#2e89ff", fontSize: 20, fontWeight: 600}}>
             Home
           </Link>
           <div style={{display: "flex", flexDirection: "row", justifyContent: 'center',alignItems: 'center',gap: 20}}>
-            <Link onClick={()=> setbookplane(()=> true)} to="/booking?q=flight" style={{color: "#000", fontWeight: 600, textDecoration: "none"}}>
-              Chuyến bay
+            <Link onClick={()=> setbookplane(()=> true)} to="/booking?q=flight" style={{color: "#000", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap"}}>
+                {t('Chuyến bay')}
             </Link>
-            <Link onClick={()=> setbookplane(()=> false)} to="/booking?q=hotel" style={{color: "#000", fontWeight: 600, textDecoration: "none"}}>
-              Khách sạn
-            </Link>
-            <Link onClick={()=> setbookplane(()=> undefined)} to="/booking?q=combo" style={{color: "#000", fontWeight: 600, textDecoration: "none"}}>
-              Chuyến bay + khách sạn
+            <Link onClick={()=> setbookplane(()=> false)} to="/booking?q=hotel" style={{color: "#000", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap"}}>
+              {t('Khách sạn')}
+            </Link> 
+            <Link onClick={()=> setbookplane(()=> undefined)} to="/booking?q=combo" style={{color: "#000", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap"}}>
+            {t('Chuyến bay + khách sạn')}
             </Link>
           </div>
         </div>
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 10}}>
+          <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 10}}>
+            <div>{lang}</div>
+            <div onClick={()=> {
+              if(lang=== "VIE") {
+                setlang(()=> "ENG")
+                i18n.changeLanguage("eng")
+                localStorage.setItem("lang", "ENG")
+              }
+              else {
+                setlang(()=> "VIE")
+                i18n.changeLanguage("vie")
+                localStorage.setItem("lang", "VIE")
+              }
+            }} style={{display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer"}}><CachedIcon></CachedIcon></div>
+          </div>
           <img referrerPolicy='no-referrer' src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/whatsapp/326/flag-vietnam_1f1fb-1f1f3.png" alt="" style={{width: 30, height: 30}} />
           <br />
           <LoginIndex userlogin={userlogin} uid={uid} setuid={setuid} />
@@ -86,7 +107,7 @@ const App=(props)=> {
         </div>
       </div>
       <Routes>
-        <Route path="/" element={<Navigate to="/booking?q=flight" />}></Route>
+        <Route path="/" element={<HomePage></HomePage>}></Route>
         <Route path="/booking" element={<Container bookplane={bookplane} setbookplane={setbookplane} />}></Route>
         <Route path="/flight/fullsearch" element={<SearchFlight />}></Route>
         <Route path="/hotel/search" element={<SearchHotel />}></Route>

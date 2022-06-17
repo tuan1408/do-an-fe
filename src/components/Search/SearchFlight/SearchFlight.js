@@ -14,7 +14,9 @@ const SearchFlight = () => {
   const [findbybrand, setfindbybrand]= useState(()=> [])
   const [findtimeorigin, settimeorigin]= useState(()=> "")
   const [findtimedestination, settimedestination]= useState(()=> "")
+  //eslint-disable-next-line
   const [findbyentities, setfindbyentities]= useState(()=> [])
+  //eslint-disable-next-line
   const [findbyrangecost, setfindbyrangecost]= useState(()=> [])
   const [listRange, setListRange]= useState(()=> [])
   const [loading, setloading]= useState(()=> false)

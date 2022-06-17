@@ -12,6 +12,7 @@ import NotFound404 from '../NotFound/NotFoundPage'
 
 const AdminPage = (props) => {
   const location= useLocation()
+  //eslint-disable-next-line
   const [change, setchange]= useState(()=> false)
   const [collapse, setcollapse ]= useState(()=> false)
   if(!location?.state?.uid) return (

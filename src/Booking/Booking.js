@@ -18,6 +18,7 @@ const Booking = (props) => {
   const [loading, setloading]= useState(()=> false)
   const [opensnack, setopensnack]= useState(()=> false)
   const navigate= useNavigate()
+  const [accept, setaccept]= useState(()=> false )
   return (
     <>
       <div style={{width: "100%", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
@@ -61,14 +62,14 @@ const Booking = (props) => {
           location.state.ps && 
           <>
             {
-              Array.from(Array(parseInt(location.state.ps.split(".")[0])).keys()).map((item, key)=> <FormCustomer setalluser={setalluser} title={"Người lớn "+(parseInt(key) + 1)} key={key} {...item} />)
+              Array.from(Array(parseInt(location.state.ps.split(".")[0])).keys()).map((item, key)=> <FormCustomer setaccept={setaccept} setalluser={setalluser} title={"Người lớn "+(parseInt(key) + 1)} key={key} {...item} />)
             }
               
             {
-              Array.from(Array(parseInt(location.state.ps.split(".")[1])).keys()).map((item, key)=> <FormCustomer setalluser={setalluser} title={"Trẻ em "+ (parseInt(key) + 1)} {...item} key={key} />)
+              Array.from(Array(parseInt(location.state.ps.split(".")[1])).keys()).map((item, key)=> <FormCustomer setaccept={setaccept} setalluser={setalluser} title={"Trẻ em "+ (parseInt(key) + 1)} {...item} key={key} />)
             }
             {
-              Array.from(Array(parseInt(location.state.ps.split(".")[2])).keys()).map((item, key)=> <FormCustomer setalluser={setalluser} title={"Em bé "+ (parseInt(key) + 1)} {...item} key={key} />)
+              Array.from(Array(parseInt(location.state.ps.split(".")[2])).keys()).map((item, key)=> <FormCustomer setaccept={setaccept} setalluser={setalluser} title={"Em bé "+ (parseInt(key) + 1)} {...item} key={key} />)
             }
           </>
         }
@@ -77,20 +78,20 @@ const Booking = (props) => {
           <>
             {
               
-              Array.from(Array(parseInt(location.state.detail_customer.split(".")[0])).keys()).map((item, key)=> <FormCustomer setalluser={setalluser} title={"Người lớn "+(parseInt(key) + 1)} key={key} {...item} />)
+              Array.from(Array(parseInt(location.state.detail_customer.split(".")[0])).keys()).map((item, key)=> <FormCustomer setaccept={setaccept} setalluser={setalluser} title={"Người lớn "+(parseInt(key) + 1)} key={key} {...item} />)
             }
               
             {
-              Array.from(Array(parseInt(location.state.detail_customer.split(".")[1])).keys()).map((item, key)=> <FormCustomer setalluser={setalluser} title={"Trẻ em "+ (parseInt(key) + 1)} {...item} key={key} />)
+              Array.from(Array(parseInt(location.state.detail_customer.split(".")[1])).keys()).map((item, key)=> <FormCustomer setaccept={setaccept} setalluser={setalluser} title={"Trẻ em "+ (parseInt(key) + 1)} {...item} key={key} />)
             }
             
           </>
         }
         <br />
         <div style={{width: "100%", maxWidth: 1024, display: "flex"}}>
-          <div onClick={()=> bookticket(agent, alluser, location.state.id_flight || location.state.id_hotel, setloading, setopensnack, navigate)} className='sdjsiajwiawa' style={{padding: "8px 40px", background: "#2e89ff", color: "#fff", fontWeight: 600, borderRadius: 8, width: "max-content", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <button disabled={accept=== false ? true : false} onClick={()=> bookticket(agent, alluser, location.state.id_flight || location.state.id_hotel, setloading, setopensnack, navigate)} className='sdjsiajwiawa' style={{padding: "8px 40px", background: "#2e89ff", color: "#fff", fontWeight: 600, borderRadius: 8, width: "max-content", cursor: accept=== true ? "pointer" : "not-allowed", display: "flex", justifyContent: "center", alignItems: "center", borderColor: "currentcolor", opacity: accept=== true ? 1 : 0.5}}>
             {loading=== false ? "Chọn" : <div style={{width: 38.150, height: 21.6, display: "flex", justifyContent: 'center',alignItems: "center",}}><CircularProgress style={{color: "#fff", width: 21.6, height: 21.6}} /></div>}
-          </div>
+          </button>
         </div>
         <br />
         <br />
