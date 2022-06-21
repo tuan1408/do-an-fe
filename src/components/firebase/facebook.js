@@ -1,4 +1,5 @@
 import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+//eslint-disable-next-line
 import { app } from "./index";
 
 const auth = getAuth();
@@ -8,11 +9,11 @@ export const loginfacebook= ()=> {
     signInWithPopup(auth, provider)
       .then((result) => {
         // The signed-in user info.
-        const user = result.user;
+        // const user = result.user;
     
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
+        // const credential = FacebookAuthProvider.credentialFromResult(result);
+        // const accessToken = credential.accessToken;
     
         // ...
       })
@@ -26,5 +27,6 @@ export const loginfacebook= ()=> {
         const credential = FacebookAuthProvider.credentialFromError(error);
     
         // ...
+        return console.log(errorCode, errorMessage, email, credential)
     });
 }

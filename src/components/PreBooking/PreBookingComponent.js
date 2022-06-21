@@ -23,6 +23,7 @@ const PreBookingComponent = (props) => {
   useEffect(()=> {
     pre_booking(query.get("id"), setdata, id)
   }, [query, id])
+  //eslint-disable-next-line
   const fakeloading= async ()=> {
     setloading(()=> true)
     await fake_sleep(1500)
