@@ -71,10 +71,10 @@ const E= (props)=> {
                             Điểm đến phổ biến
                         </div>
                         {
-                            listsearch?.length>0 && listsearch?.map((item, key)=> <X addi={props.addi} setaddi={props.setaddi} key={key} setopensuggest={setopensuggest} setchoose={props.setchoose} {...item}  />)
+                            listsearch?.length>0 && listsearch?.map((item, key)=> <X addi={props.addi} setaddi={props.setaddi} key={key} setopensuggest={setopensuggest} setchoose={props.setchoose} {...item.item}  />)
                         }
                         {
-                            listsearch?.length<=0 && hotelAutocomplete && hotelAutocomplete?.map((item, key)=> <X addi={props.addi} setaddi={props.setaddi} key={key} setopensuggest={setopensuggest} setchoose={props.setchoose} {...item}  />)
+                            listsearch?.length<=0 && hotelAutocomplete && hotelAutocomplete?.map((item, key)=> <X addi={props.addi} setaddi={props.setaddi} key={key} setopensuggest={setopensuggest} setchoose={props.setchoose}  {...item}  />)
                         }
                     </div>
                 }

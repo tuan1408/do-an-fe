@@ -1,4 +1,5 @@
 import axios from "axios"
+import Fuse from 'fuse.js'
 
 export const fts= async (setqueryresult, query)=> {
     const res= await axios({
@@ -12,5 +13,13 @@ export const fts= async (setqueryresult, query)=> {
         }
     })
     const result= await res.data
-    return setqueryresult(()=> result)
+    const options= {
+        keys: [
+            "destination",
+            "location_travel",
+        ]
+    }
+    const fuse= new Fuse(result, options)
+    console.log(fuse.search(query))
+    return setqueryresult(()=> fuse.search(query))
 }

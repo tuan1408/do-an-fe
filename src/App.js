@@ -17,6 +17,7 @@ import NotFound404 from "./NotFound/NotFoundPage"
 import axios from "axios"
 import Cookie from "js-cookie"
 
+
 const PreBookingComponent = lazy(() => {
   return new Promise(resolve => {
     setTimeout(() => resolve(import("./components/PreBooking/PreBookingComponent")), 500);
