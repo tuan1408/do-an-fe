@@ -3,7 +3,7 @@ import { fake_sleep } from "./fake_sleep"
 
 export const signup = async (data, setopensnackbar) => {
     const res = await axios({
-        url: `http://${process.env.API_URL}/signup`,
+        url: `https://do-an-be-production.up.railway.app/signup`,
         method: "post",
         timeout: 100000,
         timeoutErrorMessage: "Time out request",

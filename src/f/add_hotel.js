@@ -7,7 +7,7 @@ export const add_hotel = async (data, setloading, setopensnackbar, navigate) => 
     setloading(() => true)
     await fake_sleep(1500)
     const res = await axios({
-        url: `http://${process.env.API_URL}/add_hotel`,
+        url: `https://do-an-be-production.up.railway.app/add_hotel`,
         method: "post",
         data: {
             ...data, available_from: parseInt(moment(data.available_from, 'DD-MM-YYYY').valueOf()), expire_day: parseInt(moment(data.expire_day, "DD-MM-YYYY").valueOf())

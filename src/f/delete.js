@@ -5,7 +5,7 @@ export const delete_ = async (id, type, setloading, setopensnack) => {
     setloading(() => true)
     await fake_sleep(3000)
     const res = await axios({
-        url: `http://${process.env.API_URL}/delete`,
+        url: `https://do-an-be-production.up.railway.app/delete`,
         method: "post",
         data: {
             id: id,

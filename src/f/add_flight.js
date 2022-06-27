@@ -6,7 +6,7 @@ export const add_flight = async (data, setloading, setopensnackbar, navigate) =>
     setloading(() => true)
     await fake_sleep(3000)
     const res = await axios({
-        url: `http://${process.env.API_URL}/add_flight`,
+        url: `https://do-an-be-production.up.railway.app/add_flight`,
         method: "post",
         data: {
             ...data
