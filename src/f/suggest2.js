@@ -26,7 +26,7 @@ export const suggest2 = async (selected, setdata, setloading) => {
     setloading(() => true)
     await fake_sleep(1000)
     const res = await axios({
-        url: "http://process.env.API_URL/suggest2",
+        url: `https://do-an-be-production.up.railway.app/suggest2`,
         method: "post",
         data: {
             place: a
