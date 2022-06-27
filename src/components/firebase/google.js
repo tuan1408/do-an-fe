@@ -15,7 +15,7 @@ export const keeplogin = (setuid, setuser) => {
                 phonenumber: user.phoneNumber
             }))
             const res = await axios({
-                url: "http://process.env.URL/api/v1/make/user",
+                url: "http://process.env.API_URL/api/v1/make/user",
                 method: "post",
                 data: {
                     account: user.email,

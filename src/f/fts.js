@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 
 export const fts = async (setqueryresult, query) => {
     const res = await axios({
-        url: "http://process.env.URL/api/v1/hotel/search",
+        url: "http://process.env.API_URL/api/v1/hotel/search",
         method: "post",
         responseType: "json",
         timeout: 100000,

@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const suggest = async (setdata, id, location) => {
     const res = await axios({
-        url: "http://process.env.URL/v2/api/suggest/result",
+        url: "http://process.env.API_URL/v2/api/suggest/result",
         method: "post",
         timeout: 100000,
         timeoutErrorMessage: "Time out request",

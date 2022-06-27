@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const get_customer_book = async (id, setdata) => {
     const res = await axios({
-        url: "http://process.env.URL/api/v1/get/customer/book",
+        url: "http://process.env.API_URL/api/v1/get/customer/book",
         method: "post",
         responseType: "json",
         timeout: 100000,

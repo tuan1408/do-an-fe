@@ -3,7 +3,7 @@ import axios from "axios"
 export const detail = async (id, setdata) => {
     console.log(id)
     const res = await axios({
-        url: "http://process.env.URL/detail",
+        url: "http://process.env.API_URL/detail",
         method: "post",
         data: {
             id: id,
