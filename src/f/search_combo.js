@@ -6,7 +6,7 @@ export const search_combo = async (origin, destination, dt, cs, sc, location, ti
     setloading(() => true)
     await fake_sleep(1000)
     const res = await axios({
-        url: "http://process.env.API_URL/v2/api/result/search/combo",
+        url: `http://${process.env.API_URL}/v2/api/result/search/combo`,
         method: "post",
         responseType: "json",
         timeout: 100000,

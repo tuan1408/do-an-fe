@@ -3,7 +3,7 @@ import { fake_sleep } from "./fake_sleep"
 
 export const search_flight_ = async (setsearchflight, setresultsearch, a, b, c, d, e, setloading) => {
     const res = axios({
-        url: "http://process.env.API_URL/api/v2/airport/codeairport",
+        url: `http://${process.env.API_URL}/api/v2/airport/codeairport`,
         method: "get",
         responseType: "json",
         timeout: 100000,
@@ -14,7 +14,7 @@ export const search_flight_ = async (setsearchflight, setresultsearch, a, b, c, 
         }
     })
     const ress = axios({
-        url: "http://process.env.API_URL/api/v4/airport/fullsearch",
+        url: `http://${process.env.API_URL}/api/v4/airport/fullsearch`,
         method: "post",
         responseType: "json",
         timeout: 100000,

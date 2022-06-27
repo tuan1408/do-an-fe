@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const pre_booking = async (props, setdata, id) => {
     const res = await axios({
-        url: "http://process.env.API_URL/v4/api/prebooking/",
+        url: `http://${process.env.API_URL}/v4/api/prebooking/`,
         method: "post",
         data: {
             id: props,

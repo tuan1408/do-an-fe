@@ -47,7 +47,7 @@ const App = (props) => {
   useEffect(() => {
     (async () => {
       const res = await axios({
-        url: "http://process.env.API_URL/auto",
+        url: `http://${process.env.API_URL}/auto`,
         method: 'post',
         data: {
           id: Cookie.get("id")

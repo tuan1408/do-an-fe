@@ -3,7 +3,7 @@ import Cookie from "js-cookie"
 
 export const login = async (data, wrong) => {
     const res = await axios({
-        url: "http://process.env.API_URL/login",
+        url: `http://${process.env.API_URL}/login`,
         method: "post",
         timeout: 100000,
         timeoutErrorMessage: "Time out request",

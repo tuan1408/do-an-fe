@@ -6,7 +6,7 @@ export const bookticket = async (data1, data2, id, setloading, setopensnack, nav
     setloading(() => true)
     await fake_sleep(2000)
     const res = await axios({
-        url: "http://process.env.API_URL/booking/ticket",
+        url: `http://${process.env.API_URL}/booking/ticket`,
         method: "post",
         responseType: "json",
         data: {
@@ -24,7 +24,7 @@ export const bookticket = async (data1, data2, id, setloading, setopensnack, nav
     const newdata2 = _.unionWith(data2, _.isEqual)
     newdata2?.map(async item => {
         return axios({
-            url: "http://process.env.API_URL/booking/ticket",
+            url: `http://${process.env.API_URL}/booking/ticket`,
             method: "post",
             responseType: "json",
             data: {
