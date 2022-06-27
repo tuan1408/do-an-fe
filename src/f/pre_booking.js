@@ -1,8 +1,8 @@
 import axios from "axios"
 
-export const pre_booking= async (props, setdata, id)=> {
-    const res= await axios({
-        url: "http://localhost:4000/v4/api/prebooking/",
+export const pre_booking = async (props, setdata, id) => {
+    const res = await axios({
+        url: "http://process.env.URL/v4/api/prebooking/",
         method: "post",
         data: {
             id: props,
@@ -12,7 +12,7 @@ export const pre_booking= async (props, setdata, id)=> {
         timeout: 100000,
         timeoutErrorMessage: "Error"
     })
-    const result= await res.data[0]
-    setdata(()=> result)
-    return 
+    const result = await res.data[0]
+    setdata(() => result)
+    return
 }

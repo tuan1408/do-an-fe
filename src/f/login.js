@@ -1,9 +1,9 @@
 import axios from "axios"
 import Cookie from "js-cookie"
 
-export const login = async (data, wrong)=> {
-    const res= await axios({
-        url: "http://localhost:4000/login",
+export const login = async (data, wrong) => {
+    const res = await axios({
+        url: "http://process.env.URL/login",
         method: "post",
         timeout: 100000,
         timeoutErrorMessage: "Time out request",
@@ -12,14 +12,14 @@ export const login = async (data, wrong)=> {
             ...data
         }
     })
-    
-    const result= await res.data
-    if(result?.length > 0) {
+
+    const result = await res.data
+    if (result?.length > 0) {
         Cookie.set("id", result[0]?.secret_key)
-        wrong(()=> false)
+        wrong(() => false)
         return window.location.reload()
     }
     else {
-        return wrong(()=> true)
+        return wrong(() => true)
     }
 }

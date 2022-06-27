@@ -1,8 +1,8 @@
 import axios from "axios"
 
-export const fts_flight= async (setqueryresult, query)=> {
-    const res= await axios({
-        url: "http://localhost:4000/api/v1/flight/search",
+export const fts_flight = async (setqueryresult, query) => {
+    const res = await axios({
+        url: "http://process.env.URL/api/v1/flight/search",
         method: "post",
         responseType: "json",
         timeout: 100000,
@@ -11,6 +11,6 @@ export const fts_flight= async (setqueryresult, query)=> {
             query_string: query
         }
     })
-    const result= await res.data
-    return setqueryresult(()=> result)
+    const result = await res.data
+    return setqueryresult(() => result)
 }

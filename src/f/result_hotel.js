@@ -1,11 +1,11 @@
 import axios from "axios"
 import { fake_sleep } from "./fake_sleep"
 
-export const result_hotel= async (list,a ,b,c, d, setloading)=> {
-    setloading(()=> true)
+export const result_hotel = async (list, a, b, c, d, setloading) => {
+    setloading(() => true)
     await fake_sleep(1500)
-    const res= await axios({
-        url: "http://localhost:4000/v2/api/result/hotel",
+    const res = await axios({
+        url: "http://process.env.URL/v2/api/result/hotel",
         method: "post",
         responseType: "json",
         timeout: 100000,
@@ -14,13 +14,13 @@ export const result_hotel= async (list,a ,b,c, d, setloading)=> {
             data: {
                 origin: a.split(".")[0].toString(),
                 destination: a.split(".")[1].toString(),
-                l: b, 
+                l: b,
                 c: c,
                 d: d
-            }   
+            }
         }
     })
-    const result= await res.data
-    setloading(()=> false)
-    return list(()=> result)
+    const result = await res.data
+    setloading(() => false)
+    return list(() => result)
 }

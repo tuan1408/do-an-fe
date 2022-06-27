@@ -1,9 +1,9 @@
 import axios from "axios"
 import { fake_sleep } from "./fake_sleep"
 
-export const signup= async (data, setopensnackbar)=> {
-    const res= await axios({
-        url: "http://localhost:4000/signup",
+export const signup = async (data, setopensnackbar) => {
+    const res = await axios({
+        url: "http://process.env.URL/signup",
         method: "post",
         timeout: 100000,
         timeoutErrorMessage: "Time out request",
@@ -12,10 +12,10 @@ export const signup= async (data, setopensnackbar)=> {
             ...data
         }
     })
-    
-    const result= await res.data
-    setopensnackbar(()=> true)
+
+    const result = await res.data
+    setopensnackbar(() => true)
     await fake_sleep(2000)
-    setopensnackbar(()=> false)
+    setopensnackbar(() => false)
     console.log(result)
 }

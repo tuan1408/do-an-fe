@@ -2,11 +2,11 @@ import axios from "axios"
 import _ from "lodash"
 import moment from "moment"
 import { fake_sleep } from "./fake_sleep"
-export const bookticket= async (data1, data2, id, setloading, setopensnack, navigate)=> {
-    setloading(()=> true)
+export const bookticket = async (data1, data2, id, setloading, setopensnack, navigate) => {
+    setloading(() => true)
     await fake_sleep(2000)
-    const res= await axios({
-        url: "http://localhost:4000/booking/ticket",
+    const res = await axios({
+        url: "http://process.env.URL/booking/ticket",
         method: "post",
         responseType: "json",
         data: {
@@ -19,12 +19,12 @@ export const bookticket= async (data1, data2, id, setloading, setopensnack, navi
             time_book: moment(new Date()).format("HH:mm DD-MM-YYYY")
         }
     })
-    const result= await res.data
+    const result = await res.data
     console.log(result)
-    const newdata2= _.unionWith(data2, _.isEqual)
-    newdata2?.map(async item=> {
+    const newdata2 = _.unionWith(data2, _.isEqual)
+    newdata2?.map(async item => {
         return axios({
-            url: "http://localhost:4000/booking/ticket",
+            url: "http://process.env.URL/booking/ticket",
             method: "post",
             responseType: "json",
             data: {
@@ -41,12 +41,12 @@ export const bookticket= async (data1, data2, id, setloading, setopensnack, navi
                 time_book: moment(new Date()).format("HH:mm DD-MM-YYYY")
             }
         })
-        .then(res=> console.log(res.data))
-        .catch(err=> console.log(err))
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
     })
-    setopensnack(()=> true)
-    setloading(()=> false)
+    setopensnack(() => true)
+    setloading(() => false)
     await fake_sleep(3000)
-    setopensnack(()=> false)
+    setopensnack(() => false)
     return navigate("/")
 }

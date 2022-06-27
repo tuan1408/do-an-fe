@@ -1,9 +1,9 @@
 import axios from "axios"
 import Fuse from 'fuse.js'
 
-export const fts= async (setqueryresult, query)=> {
-    const res= await axios({
-        url: "http://localhost:4000/api/v1/hotel/search",
+export const fts = async (setqueryresult, query) => {
+    const res = await axios({
+        url: "http://process.env.URL/api/v1/hotel/search",
         method: "post",
         responseType: "json",
         timeout: 100000,
@@ -12,14 +12,14 @@ export const fts= async (setqueryresult, query)=> {
             query_string: query
         }
     })
-    const result= await res.data
-    const options= {
+    const result = await res.data
+    const options = {
         keys: [
             "destination",
             "location_travel",
         ]
     }
-    const fuse= new Fuse(result, options)
+    const fuse = new Fuse(result, options)
     console.log(fuse.search(query))
-    return setqueryresult(()=> fuse.search(query))
+    return setqueryresult(() => fuse.search(query))
 }

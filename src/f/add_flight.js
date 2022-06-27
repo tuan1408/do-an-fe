@@ -6,7 +6,7 @@ export const add_flight = async (data, setloading, setopensnackbar, navigate) =>
     setloading(() => true)
     await fake_sleep(3000)
     const res = await axios({
-        url: "http://localhost:4000/add_flight",
+        url: "http://process.env.URL/add_flight",
         method: "post",
         data: {
             ...data
